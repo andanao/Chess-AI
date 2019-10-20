@@ -44,40 +44,40 @@ P P P P P P P P
 R . B Q K B . R
 
 White
-c3e4
-r . b q k b . r
-p p p p p p p p
-. . n . . n . .
-. . . . . . . .
-. . . . N . . .
-. . . . . N . .
-P P P P P P P P
-R . B Q K B . R
-
-Black
-f6e4
-r . b q k b . r
-p p p p p p p p
-. . n . . . . .
-. . . . . . . .
-. . . . n . . .
-. . . . . N . .
-P P P P P P P P
-R . B Q K B . R
-
-White
 f3e5
 r . b q k b . r
 p p p p p p p p
-. . n . . . . .
+. . n . . n . .
 . . . . N . . .
-. . . . n . . .
 . . . . . . . .
+. . N . . . . .
 P P P P P P P P
 R . B Q K B . R
 
 Black
 c6e5
+r . b q k b . r
+p p p p p p p p
+. . . . . n . .
+. . . . n . . .
+. . . . . . . .
+. . N . . . . .
+P P P P P P P P
+R . B Q K B . R
+
+White
+c3e4
+r . b q k b . r
+p p p p p p p p
+. . . . . n . .
+. . . . n . . .
+. . . . N . . .
+. . . . . . . .
+P P P P P P P P
+R . B Q K B . R
+
+Black
+f6e4
 r . b q k b . r
 p p p p p p p p
 . . . . . . . .

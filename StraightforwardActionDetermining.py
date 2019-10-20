@@ -24,7 +24,14 @@ class engine:
         for item in move_list:
             child = chess.pgn.GameNode()
             child.parent = root
-            child.move = board.parse_san(item)
+            try:
+                child.move = board.parse_san(item)
+            except:
+                print(board.legal_moves)
+                print(move_list)
+                print("\nBroken At:")
+                print(item)
+
             score = self.help.board_value(child.board(),pcol)
             child.comment = [child.move, score]
             root.variations.append(child)
@@ -42,4 +49,6 @@ class engine:
         best_move = random.choice(movespace)
         self.turn += 1
         # print(type(best_node.move))
+        if self.turn > 75:
+            return chess.Move.null()
         return best_move
