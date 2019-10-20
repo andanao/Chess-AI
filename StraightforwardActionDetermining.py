@@ -18,7 +18,6 @@ class engine:
         root.setup(board.fen())
 
         best_score = [-10000] #set the bar low
-        list_analysis = []
         for item in move_list:
             child = chess.pgn.GameNode()
             child.parent = root
