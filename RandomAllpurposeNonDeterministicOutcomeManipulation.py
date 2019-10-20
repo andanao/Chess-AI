@@ -10,7 +10,7 @@ class engine:
     def play(self, board, tlim):
         leg_move_list = self.legal_move_list(board)
         random_num = random.randint(0,len(leg_move_list)-1)
-        optimal_play = board.push_san(leg_move_list[random_num])
+        optimal_play = board.parse_san(leg_move_list[random_num])
         return optimal_play
 
     def legal_move_list(self,board):

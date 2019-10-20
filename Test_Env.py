@@ -32,10 +32,10 @@ while not board.is_game_over():
     result = Black.play(board, chess.engine.Limit(time=tlim))
     if board.uci(result) == "0000":
         break
-    board.push(result.move)
+    board.push(result)
     print("\nBlack", file=open("game_debug.pgn", "a+"))
-    print(board.uci(result.move), file=open("game_debug.pgn", "a+"))
+    print(board.uci(result), file=open("game_debug.pgn", "a+"))
     print(board, file=open("game_debug.pgn", "a+"))
-    print(board.uci(result.move), file=open("game_stack.pgn", "a+"))
+    print(board.uci(result), file=open("game_stack.pgn", "a+"))
 
 print('\n\nyou done\n\n')
