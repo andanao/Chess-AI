@@ -18,7 +18,7 @@ class engine:
         
         # root = self.help.grow_twigs(board,player_col)
         test_space = self.help.tree2(board,player_col)
-        print_to_debug(test_space)
+        # print_to_debug(test_space)
         # for cur in root.variations:
         #     child = self.help.grow_twigs(cur.board(),-player_col)
         #     for item in child.variations:
@@ -33,7 +33,7 @@ class engine:
                     best_score.clear()
                     movespace.clear()
                 best_score.append(test_space[i][1])
-                movespace.append(test_space[i][0])
+               z movespace.append(test_space[i][0])
                 
 
         best_move = random.choice(movespace)
