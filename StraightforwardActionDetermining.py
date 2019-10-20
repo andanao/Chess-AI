@@ -14,25 +14,31 @@ class engine:
         root.setup(board.fen())
 
         best_score = -10
+        list_analysis = []
         for item in move_list:
             child = chess.pgn.GameNode()
             child.parent = root
             child.move = board.parse_san(item)
             score = self.help.board_value(child.board(),1)
             child.comment = score
+            list_analysis.append([child.move, score])
             if score > best_score:
                 best_score = score
                 best_move = child.move
-                print(child.comment)
+                
 
-            # root.variations.append(child)
+            root.variations.append(child)
 
             # print(child.board)
-        
+        if self.turn < 2:
+            # print(list_analysis)
+            print(list_analysis[0])
         # best_score = 0
         # score = 0
         # best_node = root
-        # for cur in root.variations:
+        for cur in root.variations:
+            pass
+            # print("Comment:"+str(cur.comment))
             # print(cur.board())
             # print(self.turn)
             # test = self.help.board_value(cur.board(),1)
