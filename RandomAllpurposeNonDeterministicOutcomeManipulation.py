@@ -13,7 +13,7 @@ class engine:
     
     def play(self, board, tlim):
         help = helper.meth()
-        if self.turn < 100:
+        if self.turn < 50:
             leg_move_list = help.legal_move_list(board)
             random_num = random.randint(0,len(leg_move_list)-1)
             try:
