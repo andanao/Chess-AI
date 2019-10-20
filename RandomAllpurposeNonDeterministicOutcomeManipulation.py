@@ -4,6 +4,9 @@ import re
 import helper
 
 class engine:
+    """
+    Chess engine that makes a random move
+    """
     # needs initializer
     def __init__(self):
         pass

@@ -18,11 +18,12 @@ class meth:
         """
         Evaluate the board position to good bad number
 
-        WHITE = 1
-        BLACK = -1
+        player_col:
+            WHITE = 1
+            BLACK = -1
         """
         value = 0
         pmap = board.piece_map()
         for key in pmap:
-            value += piece_val[pmap[key].symbol()]*player_col
+            value += self.piece_val[pmap[key].symbol()]*player_col
         return value
