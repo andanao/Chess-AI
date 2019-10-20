@@ -1,11 +1,10 @@
 # import asyncio
 import chess
 import chess.engine
-# import FirstOrderOptimalLongtermStrategy as eng1
+import StraightforwardActionDetermining as eng1
 import RandomAllpurposeNonDeterministicOutcomeManipulation as eng2
-import RandomAllpurposeNonDeterministicOutcomeManipulation as eng1
 
-
+s
 print("\n\n\n\n\n\n\n")
 White = eng1.engine()
 Black = eng2.engine()

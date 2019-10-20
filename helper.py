@@ -27,3 +27,5 @@ class meth:
         for key in pmap:
             value += self.piece_val[pmap[key].symbol()]*player_col
         return value
+    
+    
