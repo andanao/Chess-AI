@@ -20,9 +20,9 @@ while not board.is_game_over():
     if board.uci(result) == "0000":
         break
     board.push(result)
-    print("\nWhite", file=open("game_debug.pgn", "a+"))
-    print(board.uci(result), file=open("game_debug.pgn", "a+"))
-    print(board, file=open("game_debug.pgn", "a+"))
+    print("\nWhite", file=open("game_debug.txt", "a+"))
+    print(board.uci(result), file=open("game_debug.txt", "a+"))
+    print(board, file=open("game_debug.txt", "a+"))
     print(board.uci(result), file=open("game_stack.pgn", "a+"))
 
     if board.is_game_over():
@@ -33,9 +33,9 @@ while not board.is_game_over():
     if board.uci(result) == "0000":
         break
     board.push(result)
-    print("\nBlack", file=open("game_debug.pgn", "a+"))
-    print(board.uci(result), file=open("game_debug.pgn", "a+"))
-    print(board, file=open("game_debug.pgn", "a+"))
+    print("\nBlack", file=open("game_debug.txt", "a+"))
+    print(board.uci(result), file=open("game_debug.txt", "a+"))
+    print(board, file=open("game_debug.txt", "a+"))
     print(board.uci(result), file=open("game_stack.pgn", "a+"))
 
 print('\n\nyou done\n\n')
