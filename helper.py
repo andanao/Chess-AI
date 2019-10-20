@@ -121,6 +121,7 @@ class meth:
             score = self.help.board_value(child.board(),player_col)
             child.comment = [child.move, score]
             root.variations.append(child)
+        return root
 
 
     # def child_from_root(self,root,move):

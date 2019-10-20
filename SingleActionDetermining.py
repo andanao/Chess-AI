@@ -24,13 +24,7 @@ class engine:
         for item in move_list:
             child = chess.pgn.GameNode()
             child.parent = root
-            try:
-                child.move = board.parse_san(item)
-            except:
-                print(board.legal_moves)
-                print(move_list)
-                print("\nBroken At:")
-                print(item)
+            child.move = board.parse_san(item)
 
             score = self.help.board_value(child.board(),pcol)
             child.comment = [child.move, score]
