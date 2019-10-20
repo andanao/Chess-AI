@@ -9,8 +9,10 @@ class engine:
         self.help = helper.meth()
     
     def play(self, board, tlim):
-        # if board.turn == BLACK:
-        #     board.mirror() #this no worky work
+        if board.turn == chess.WHITE:
+            pcol = 1 #this no worky work
+        else:
+            pcol = -1
 
         move_list = self.help.legal_move_list(board)
         
@@ -22,7 +24,7 @@ class engine:
             child = chess.pgn.GameNode()
             child.parent = root
             child.move = board.parse_san(item)
-            score = self.help.board_value(child.board(),1)
+            score = self.help.board_value(child.board(),pcol)
             child.comment = [child.move, score]
             root.variations.append(child)
 

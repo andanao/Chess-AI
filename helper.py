@@ -24,7 +24,10 @@ class meth:
         value = 0
         pmap = board.piece_map()
         for key in pmap:
-            value += self.piece_val[pmap[key].symbol()]*player_col
+            peice_type = pmap[key].symbol()
+            value += self.piece_val[peice_type]*player_col
+            # loc_val[peice_type][key]
+
         return value
     
     
