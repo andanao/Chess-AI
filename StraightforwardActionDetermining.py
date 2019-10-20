@@ -1,6 +1,7 @@
 import chess
 import chess.pgn
 import helper
+import random
 
 class engine:
     def __init__(self):
@@ -26,17 +27,17 @@ class engine:
             child.comment = [child.move, score]
             root.variations.append(child)
 
-
+        movespace = []
         for cur in root.variations:
-            if self.turn < 2:
-                print(cur.comment[0])
-
-            # if cur.comment >= best_score[0]:
-            #     if cur.comment > best_score[0]:
-            #         best_score.clear()
-            #     best_score.append(cur.comment)
+            if cur.comment[1] >= best_score[0]:
+                if cur.comment[1] > best_score[0]:
+                    best_score.clear()
+                    movespace.clear()
+                best_score.append(cur.comment[1])
+                movespace.append(cur.comment[0])
         
-        best_move = list_analysis[0][0]
+
+        best_move = random.choice(movespace)
         self.turn += 1
         # print(type(best_node.move))
         return best_move
