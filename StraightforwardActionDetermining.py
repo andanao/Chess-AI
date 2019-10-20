@@ -29,25 +29,11 @@ class engine:
 
             root.variations.append(child)
 
-            # print(child.board)
         if self.turn < 2:
-            # print(list_analysis)
-            print(list_analysis[0])
-        # best_score = 0
-        # score = 0
-        # best_node = root
+            print(list_analysis)
+
         for cur in root.variations:
             pass
-            # print("Comment:"+str(cur.comment))
-            # print(cur.board())
-            # print(self.turn)
-            # test = self.help.board_value(cur.board(),1)
-            # print(test)
-            # score = test
-            # score = 1 #self.help.board_value(cur.board(),1)
-            # if score > best_score:
-            #     best_score = score
-            #     best_node = cur
         
         self.turn += 1
         # print(type(best_node.move))
