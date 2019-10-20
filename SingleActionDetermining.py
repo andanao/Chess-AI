@@ -10,25 +10,26 @@ class engine:
     
     def play(self, board, tlim):
         if board.turn == chess.WHITE:
-            pcol = 1 #this no worky work
+            player_col = 1 #this no worky work
         else:
-            pcol = -1
+            player_col = -1
 
 
-        move_list = self.help.legal_move_list(board)
+        # move_list = self.help.legal_move_list(board)
         
-        root = chess.pgn.Game()
-        root.setup(board.fen())
+        # root = chess.pgn.Game()
+        # root.setup(board.fen())
 
         best_score = [-10000] #set the bar low
-        for item in move_list:
-            child = chess.pgn.GameNode()
-            child.parent = root
-            child.move = board.parse_san(item)
+        # for item in move_list:
+        #     child = chess.pgn.GameNode()
+        #     child.parent = root
+        #     child.move = board.parse_san(item)
 
-            score = self.help.board_value(child.board(),pcol)
-            child.comment = [child.move, score]
-            root.variations.append(child)
+        #     score = self.help.board_value(child.board(),pcol)
+        #     child.comment = [child.move, score]
+        #     root.variations.append(child)
+        root = self.help.grow_twigs(board,player_col)
 
         movespace = []
         for cur in root.variations:

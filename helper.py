@@ -118,7 +118,7 @@ class meth:
             child = chess.pgn.GameNode()
             child.parent = root
             child.move = board.parse_san(item)
-            score = self.help.board_value(child.board(),player_col)
+            score = self.board_value(child.board(),player_col)
             child.comment = [child.move, score]
             root.variations.append(child)
         return root
