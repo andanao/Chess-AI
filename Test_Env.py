@@ -1,8 +1,8 @@
 # import asyncio
 import chess
 import chess.engine
-import StraightforwardActionDetermining as eng2
-import RandomAllpurposeNonDeterministicOutcomeManipulation as eng1
+import StraightforwardActionDetermining as eng1
+import RandomAllpurposeNonDeterministicOutcomeManipulation as eng2
 
 
 print("\n\n\n\n\n\n\n")

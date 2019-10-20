@@ -88,7 +88,6 @@ for key in pmap:
         # print(str(peice.color)+'\t'+peice.symbol()+'\t'+str(key)+'\t'+str(loc_val[peice.symbol()][key]))
         value += loc_val[peice.symbol()][key]
     elif not(peice.color) and player_col == -1:
-        print(str(peice.color)+'\t'+peice.symbol()+'\t'+str(63-key)+'\t')#+str(loc_val[peice.symbol()][key]))
         value += loc_val[peice.symbol().capitalize()][63-key]
 
         
