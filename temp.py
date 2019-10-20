@@ -1,14 +1,15 @@
 import chess
 import re
 import random
+import helper
 
+# print('\n\n\n\n\n')
 board  = chess.Board()
-leg_move = board.legal_moves
-
-leg_move_str = str(leg_move)
-
-leg_move_list = re.findall(r"\w{2,4}(?=,|\))",leg_move_str)
-
-rnum = random.randint(0,len(leg_move_list)-1)
-
-print(board.parse_san(leg_move_list[rnum]))
+pmap = board.piece_map()
+for key in pmap:
+    print(key)
+# print(board.piece_map())
+# print(board)
+# print(pmap['0'])
+# board.pieces('p',chess.BLACK)
+# print(board.pieces('P','WHITE'))

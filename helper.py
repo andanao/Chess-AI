@@ -3,12 +3,11 @@ import re
 
 class meth:
     def __init__(self):
-        pass
+        self.reg_parse = re.compile(r"\w{2,4}(?=,|\))")
 
-    @staticmethod
-    def legal_move_list(board):
+    def legal_move_list(self,board):
         leg_move = board.legal_moves
-        leg_move_list = re.findall(r"\w{2,4}(?=,|\))",str(leg_move))
+        leg_move_list = re.findall(self.reg_parse,str(leg_move))
         return leg_move_list
 
     @staticmethod
