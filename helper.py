@@ -123,7 +123,24 @@ class meth:
             root.variations.append(child)
         return root
 
-    # def recusive_tree(self,board,player_col,depth):
+    # def recusive_tree(self,board,player_col,depth,depthlim):
+    #     root = chess.pgn.Game()
+    #     root.setup(board.fen())
+    #     movelist = self.legal_move_list(board)
+    #     # movespace = []
+    #     for item in movelist:
+    #         child = chess.pgn.GameNode()
+    #         child.parent = root
+    #         child.move = board.parse_san(item)
+    #         score = self.board_value(child.board(),player_col)
+    #         child.comment = [child.move, score]
+    #         root.variations.append(child)
+
+    #     if depth >= depthlim:9
+    #         return root
+    #     else:
+    #         self.recursive_tree(board,-player_col,depth+1,depthlim)
+
         
 
 
