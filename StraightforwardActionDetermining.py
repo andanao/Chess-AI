@@ -10,7 +10,7 @@ class engine:
     def play(self, board, tlim):
         # if board.turn == BLACK:
         #     board.mirror() #this no worky work
-        
+
         move_list = self.help.legal_move_list(board)
         
         root = chess.pgn.Game()
@@ -23,18 +23,20 @@ class engine:
             child.parent = root
             child.move = board.parse_san(item)
             score = self.help.board_value(child.board(),1)
-            child.comment = score
-            list_analysis.append([child.move, score]) #idk if this is neccessary
+            child.comment = [child.move, score]
             root.variations.append(child)
-
-        if self.turn < 2:
-            print(list_analysis)
 
 
         for cur in root.variations:
-            if cur.comment >= best_score:
-                # add to list if > 1 or equal
+            if self.turn < 2:
+                print(cur.comment[0])
+
+            # if cur.comment >= best_score[0]:
+            #     if cur.comment > best_score[0]:
+            #         best_score.clear()
+            #     best_score.append(cur.comment)
         
+        best_move = list_analysis[0][0]
         self.turn += 1
         # print(type(best_node.move))
         return best_move

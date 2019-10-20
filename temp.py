@@ -3,11 +3,10 @@ import re
 import random
 import helper
 
-test = [1000, 1000, 1000]
-a = 1000
+best_score = [1000, 1000, 1000]
+a = 2000
 
-if a == test [0]:
-    test.append(a)
-elif a > test[0]:
-    test.clear()
-    test.append(a)
+if a >= best_score [0]:
+    if a > best_score[0]:
+        best_score.clear()
+    best_score.append(a)
