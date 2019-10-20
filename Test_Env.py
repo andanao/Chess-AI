@@ -1,8 +1,9 @@
 # import asyncio
 import chess
 import chess.engine
-import FirstOrderOptimalLongtermStrategy as eng1
+# import FirstOrderOptimalLongtermStrategy as eng1
 import RandomAllpurposeNonDeterministicOutcomeManipulation as eng2
+import RandomAllpurposeNonDeterministicOutcomeManipulation as eng1
 
 
 print("\n\n\n\n\n\n\n")
@@ -11,6 +12,8 @@ Black = eng2.engine()
 print("", file=open("game_stack.pgn", "w+"), end="")
 print("", file=open("game_debug.pgn", "w+"), end="")
 
+# debug_file = open("game_debug.txt", "a+")
+# stack_file = open("game_stack.pgn", "a+")
 
 tlim = .01
 board = chess.Board()
