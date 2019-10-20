@@ -12,9 +12,8 @@ class engine:
         if board.turn == chess.WHITE:
             pcol = 1 #this no worky work
         else:
-            pcol = 1
-            board = board.mirror()
-            # pcol = -1
+            pcol = -1
+
 
         move_list = self.help.legal_move_list(board)
         
