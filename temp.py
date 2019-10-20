@@ -24,6 +24,14 @@ from chess_debug import print_to_debug
 #           get best score
 #           store move
 #           total_score_append [move, tscore]
+test = "
+ 1,  1,  1,  1,  1,  1,  1,  1,
+ 2,  2,  2,  3,  3,  2,  2,  2,
+ 2,  2,  3,  4,  4,  3,  2,  2,
+ 3,  3,  4,  5,  5,  4,  3,  3,
+ 3,  3,  4,  5,  5,  4,  3,  3,
+ 2,  2,  3,  4,  4,  3,  2,  2,
+10, 10, 10, 10, 10, 10, 10, 10,
+69, 69, 69, 69, 69, 69, 69, 69, 
 
-
-print_to_debug('tes2t')
+"

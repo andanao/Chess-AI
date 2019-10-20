@@ -6,17 +6,18 @@ import ActionSequenceSimulating as eng1
 import SingleActionDetermining as eng2
 # import RandomAllpurposeNonDeterministicOutcomeManipulation as eng2
 # import RandomAllpurposeNonDeterministicOutcomeManipulation as eng1
-
+engine_1 = 'ASS'
+engine_2 = 'SAD'
 
 print("\n\t--- o ---\n\nStarting Game:\n")
 if random.choice([True, False]):
     White = eng1.engine()
     Black = eng2.engine()
-    print("Engine 1 is White, Engine 2 is Black\n")
+    print(engine_1+" is White, "+engine_2+" is Black\n")
 else:
     White = eng2.engine()
     Black = eng1.engine()
-    print("Engine 1 is Black, Engine 2 is White\n")
+    print(engine_1+" is Black,"+engine_2+" is White\n")
 
 print("", file=open("game_stack.pgn", "w+"), end="")
 print("", file=open("game_debug.txt", "w+"), end="")
