@@ -1,4 +1,5 @@
 import chess
+import chess.pgn
 import re
 
 class meth:
@@ -101,8 +102,35 @@ class meth:
 
         return value
     
-    def make_children(self,board):
-        self.legal_move_list(board)
+    # def make_children(self,board):
+    #     self.legal_move_list(board)
+    #     root = chess.pgn.Game()
+    #     root.setup(board.fen())
+        
+    def grow_twigs(self,board,player_col):
+        """Generate Best move, return tree"""
+        
         root = chess.pgn.Game()
         root.setup(board.fen())
-        
+        movelist = self.legal_move_list(board)
+        # movespace = []
+        for item in movelist:
+            child = chess.pgn.GameNode()
+            child.parent = root
+            child.move = board.parse_san(item)
+            score = self.help.board_value(child.board(),player_col)
+            child.comment = [child.move, score]
+            root.variations.append(child)
+
+
+    # def child_from_root(self,root,move):
+    #     """generates a child from a root and a move"""
+    #     child = chess.pgn.GameNode()
+    #     child.parent = root
+    #     child.move = board.parse_san(item)
+    #     # score = self.help.board_value(child.board(),player_col)
+    #     # child.comment = [child.move, score]
+    #     return child
+
+            
+

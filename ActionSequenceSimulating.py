@@ -73,3 +73,8 @@ class engine:
         if self.turn > 75:
             return chess.Move.null()
         return best_move
+
+    class branchy:
+        def __init__():
+            self.node
+            self.depth
