@@ -101,4 +101,8 @@ class meth:
 
         return value
     
-    
+    def make_children(self,board):
+        self.legal_move_list(board)
+        root = chess.pgn.Game()
+        root.setup(board.fen())
+        
