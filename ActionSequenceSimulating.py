@@ -9,7 +9,7 @@ class engine:
         self.help = helper.meth()
     
     def play(self, board, tlim):
-        """Chess Engine that simulates 2 moves and min_maxes"""
+        """ChessEngine """
         if board.turn == chess.WHITE:
             player_col = 1 #this no worky work
         else:
@@ -24,11 +24,13 @@ class engine:
             child = self.help.grow_twigs(cur.board(),-player_col)
             for item in child.variations:
                 test_space.append([cur.comment[0], cur.comment[1] - item.comment[1]])
-        
+        # print(len(test_space))
         
         best_score = [-10000] #set the bar low
-        movespace = []
+        movespace = [test_space[0][0]]
         for i in range(len(test_space)):
+            # if self.turn < 1:
+                # print(test_space[i])
             if test_space[i][1] >= best_score[0]:
                 if test_space[i][1] > best_score[0]:
                     best_score.clear()
@@ -47,6 +49,7 @@ class engine:
         #             movespace.clear()
         #         best_score.append(cur.comment[1])
         #         movespace.append(cur.comment[0])
+
         best_move = random.choice(movespace)
         self.turn += 1
         # print(type(best_node.move))
