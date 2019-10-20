@@ -26,9 +26,11 @@ print("", file=open("game_debug.txt", "w+"), end="")
 
 tlim = .01
 board = chess.Board()
-
+move_count = 0
 while not board.is_game_over():
     result = White.play(board, chess.engine.Limit(time=tlim))
+    # move_count += 1
+    # print(move_count,end='\t')
     if board.uci(result) == "0000":
         break
         print("White Forefeit")
@@ -43,6 +45,8 @@ while not board.is_game_over():
 
 
     result = Black.play(board, chess.engine.Limit(time=tlim))
+    # move_count += 1
+    # print(move_count,end='\t')
     if board.uci(result) == "0000":
         break
         print("Black Forfeit")
