@@ -11,4 +11,4 @@ leg_move_list = re.findall(r"\w{2,4}(?=,|\))",leg_move_str)
 
 rnum = random.randint(0,len(leg_move_list)-1)
 
-print(leg_move_list[rnum])
+print(board.parse_san(leg_move_list[rnum]))
