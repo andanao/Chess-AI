@@ -10,9 +10,9 @@ class engine:
     
     def play(self, board, tlim):
         if board.turn == chess.WHITE:
-            pcol = 1 #this no worky work
+            player_col = 1 #this no worky work
         else:
-            pcol = -1
+            pcoplayer_col = -1
 
 
         move_list = self.help.legal_move_list(board)
@@ -24,20 +24,39 @@ class engine:
         for item in move_list:
             child = chess.pgn.GameNode()
             child.parent = root
-            try:
-                child.move = board.parse_san(item)
-            except:
-                print(board.legal_moves)
-                print(move_list)
-                print("\nBroken At:")
-                print(item)
+            child.move = board.parse_san(item)
 
-            score = self.help.board_value(child.board(),pcol)
+            score = self.help.board_value(child.board(),player_col)
             child.comment = [child.move, score]
             root.variations.append(child)
 
         movespace = []
+        
         for cur in root.variations:
+            child_movelist = self.help.legal_move_list(cur.board())
+            # print(child_movelist)
+
+            gscore_max = -1000
+            gscore = -100
+            for item in child_movelist:
+                gchild = chess.pgn.GameNode()
+                gchild.parent = cur
+                gchild.move = board.parse_san(item)
+                gscore = self.help.board_value(gchild.board(),-player_col)
+                if gscore > gscore_max
+                    gscore_max = gscore
+                    g_best_move = item
+                
+                total_score = 
+                    
+                # gchild.comment = [gchild.move, gscore]
+                # root.variations.append(gchild)
+            
+            # # print(child_movelist)
+            # for item in child_movelist:
+            #     grandchild.move = 
+            #     grandchild_score = self.help.board_value()
+
             if cur.comment[1] >= best_score[0]:
                 if cur.comment[1] > best_score[0]:
                     best_score.clear()
@@ -45,6 +64,8 @@ class engine:
                 best_score.append(cur.comment[1])
                 movespace.append(cur.comment[0])
         
+        # for cur in root,variations:
+
 
         best_move = random.choice(movespace)
         self.turn += 1
