@@ -17,7 +17,7 @@ if random.choice([True, False]):
 else:
     White = eng2.engine()
     Black = eng1.engine()
-    print(engine_1+" is Black,"+engine_2+" is White\n")
+    print(engine_1+" is Black, "+engine_2+" is White\n")
 
 print("", file=open("game_stack.pgn", "w+"), end="")
 print("", file=open("game_debug.txt", "w+"), end="")
@@ -33,8 +33,8 @@ while not board.is_game_over():
     # move_count += 1
     # print(move_count,end='\t')
     if board.uci(result) == "0000":
-        break
         print("White Forefeit")
+        break
     board.push(result)
     print("\nWhite", file=open("game_debug.txt", "a+"))
     print(board.uci(result), file=open("game_debug.txt", "a+"))
@@ -49,8 +49,8 @@ while not board.is_game_over():
     # move_count += 1
     # print(move_count,end='\t')
     if board.uci(result) == "0000":
-        break
         print("Black Forfeit")
+        break
     board.push(result)
     print("\nBlack", file=open("game_debug.txt", "a+"))
     print(board.uci(result), file=open("game_debug.txt", "a+"))

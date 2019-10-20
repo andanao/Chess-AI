@@ -97,14 +97,9 @@ class meth:
 
         return value
     
-    # def make_children(self,board):
-    #     self.legal_move_list(board)
-    #     root = chess.pgn.Game()
-    #     root.setup(board.fen())
         
     def grow_twigs(self,board,player_col):
         """Returns tree from player col"""
-        
         root = chess.pgn.Game()
         root.setup(board.fen())
         movelist = self.legal_move_list(board)
@@ -118,8 +113,22 @@ class meth:
             root.variations.append(child)
         return root
     
+    def tree2(self,board,player_col):
+        root = self.grow_twigs(board,player_col)
+        test_space = []
+        for cur in root.variations:
+            child = self.grow_twigs(cur.board(),-player_col)
+            for item in child.variations:
+                test_space.append([cur.comment[0], cur.comment[1] - item.comment[1]])
+        return test_space
 
-
+    def tree3(self,board,player_col):
+        root = self.grow_twigs(board,player_col)
+        tree_space
+        for cur1 in root.variations:
+            child1 = self.grow_twigs(cur.board(),-player_col)
+            for cur2 in child1.variations:
+                
     # def recusive_tree(self,board,player_col,depth,depthlim):
     #     root = chess.pgn.Game()
     #     root.setup(board.fen())

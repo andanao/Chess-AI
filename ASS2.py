@@ -2,7 +2,6 @@ import chess
 import chess.pgn
 import helper
 import random
-from chess_debug import print_to_debug
 
 class engine:
     def __init__(self):
@@ -16,13 +15,13 @@ class engine:
         else:
             player_col = -1
         
-        # root = self.help.grow_twigs(board,player_col)
-        test_space = self.help.tree2(board,player_col)
-        print_to_debug(test_space)
-        # for cur in root.variations:
-        #     child = self.help.grow_twigs(cur.board(),-player_col)
-        #     for item in child.variations:
-        #         test_space.append([cur.comment[0], cur.comment[1] - item.comment[1]])
+        root = self.help.grow_twigs(board,+player_col)
+
+        test_space = []
+        for cur in root.variations:
+            child = self.help.grow_twigs(cur.board(),-player_col)
+            for item in child.variations:
+                test_space.append([cur.comment[0], cur.comment[1] - item.comment[1]])
         # print(len(test_space))
         
         best_score = [-10000] #set the bar low
