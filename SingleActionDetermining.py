@@ -21,14 +21,6 @@ class engine:
         # root.setup(board.fen())
 
         best_score = [-10000] #set the bar low
-        # for item in move_list:
-        #     child = chess.pgn.GameNode()
-        #     child.parent = root
-        #     child.move = board.parse_san(item)
-
-        #     score = self.help.board_value(child.board(),pcol)
-        #     child.comment = [child.move, score]
-        #     root.variations.append(child)
         root = self.help.grow_twigs(board,player_col)
 
         movespace = []

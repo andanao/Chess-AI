@@ -108,7 +108,7 @@ class meth:
     #     root.setup(board.fen())
         
     def grow_twigs(self,board,player_col):
-        """Generate Best move, return tree"""
+        """Returns tree from player col"""
         
         root = chess.pgn.Game()
         root.setup(board.fen())
