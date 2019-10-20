@@ -3,6 +3,9 @@ import chess
 # moveset = ["d2d4", "e1c3", "c1f4", "c3c7"]
 
 class engine:
+    """
+    Chess engine that plays for fools mate then forfeits
+    """
     # needs initializer
     def __init__(self):
         self.moveset = ["e2e4", "d1f3", "f1c4", "f3f7"]
