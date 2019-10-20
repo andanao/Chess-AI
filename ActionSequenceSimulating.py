@@ -9,6 +9,7 @@ class engine:
         self.help = helper.meth()
     
     def play(self, board, tlim):
+        """Chess Engine that simulates 2 moves and min_maxes"""
         if board.turn == chess.WHITE:
             player_col = 1 #this no worky work
         else:
