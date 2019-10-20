@@ -5,7 +5,7 @@ import StraightforwardActionDetermining as eng1
 import RandomAllpurposeNonDeterministicOutcomeManipulation as eng2
 
 
-print("\n\n\n\n\n\n\n")
+print("\n\n\n")
 White = eng1.engine()
 Black = eng2.engine()
 print("", file=open("game_stack.pgn", "w+"), end="")
