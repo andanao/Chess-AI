@@ -10,7 +10,7 @@ print("\n\n\n\n\n\n\n")
 White = eng1.engine()
 Black = eng2.engine()
 print("", file=open("game_stack.pgn", "w+"), end="")
-print("", file=open("game_debug.pgn", "w+"), end="")
+print("", file=open("game_debug.txt", "w+"), end="")
 
 # debug_file = open("game_debug.txt", "a+")
 # stack_file = open("game_stack.pgn", "a+")
