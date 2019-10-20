@@ -24,6 +24,7 @@ class engine:
         root = self.help.grow_twigs(board,player_col)
 
         movespace = []
+        #below gets the best move
         for cur in root.variations:
             if cur.comment[1] >= best_score[0]:
                 if cur.comment[1] > best_score[0]:

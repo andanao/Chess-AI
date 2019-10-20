@@ -9,8 +9,7 @@ import helper
 board  = chess.Board()
 player_col = 1
 # board.push_san("e4")
-root = helper.meth.grow_twigs()
-
+# roothelper.meth.grow_twigs()
 
 
 print(board)

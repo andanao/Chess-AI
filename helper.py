@@ -123,6 +123,9 @@ class meth:
             root.variations.append(child)
         return root
 
+    # def recusive_tree(self,board,player_col,depth):
+        
+
 
     # def child_from_root(self,root,move):
     #     """generates a child from a root and a move"""
