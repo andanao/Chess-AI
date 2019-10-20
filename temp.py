@@ -2,6 +2,7 @@ import chess
 import re
 import random
 import helper
+from chess_debug import print_to_debug
 
 # go away old shit
      # print('\n\n\n\n\n')
@@ -25,5 +26,4 @@ import helper
 #           total_score_append [move, tscore]
 
 
-a = [1,2,3,3,44,12,5,6,1,2,6]
-print(max(a))
+print_to_debug('tes2t')

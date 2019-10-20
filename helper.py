@@ -122,6 +122,8 @@ class meth:
             child.comment = [child.move, score]
             root.variations.append(child)
         return root
+    
+
 
     # def recusive_tree(self,board,player_col,depth,depthlim):
     #     root = chess.pgn.Game()

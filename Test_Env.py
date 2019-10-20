@@ -1,15 +1,23 @@
 # import asyncio
+import random
 import chess
 import chess.engine
-import ActionSequenceSimulating as eng1
-import SingleActionDetermining as eng2
+import SingleActionDetermining as eng1
+import ActionSequenceSimulating as eng2
 # import RandomAllpurposeNonDeterministicOutcomeManipulation as eng2
 # import RandomAllpurposeNonDeterministicOutcomeManipulation as eng1
 
 
-print("\n\nStarting Game\n\n")
-White = eng1.engine()
-Black = eng2.engine()
+print("\n\n\t--- 0 ---\mStarting Game:\n")
+if random.choice([True, False]):
+    White = eng1.engine()
+    Black = eng2.engine()
+    print("Engine 1 is White, Engine 2 is Black")
+else:
+    White = eng2.engine()
+    Black = eng1.engine()
+    print("Engine 1 is Black, Engine 2 is White")
+
 print("", file=open("game_stack.pgn", "w+"), end="")
 print("", file=open("game_debug.txt", "w+"), end="")
 
@@ -23,6 +31,7 @@ while not board.is_game_over():
     result = White.play(board, chess.engine.Limit(time=tlim))
     if board.uci(result) == "0000":
         break
+        print("White Forefeit")
     board.push(result)
     print("\nWhite", file=open("game_debug.txt", "a+"))
     print(board.uci(result), file=open("game_debug.txt", "a+"))
@@ -36,10 +45,11 @@ while not board.is_game_over():
     result = Black.play(board, chess.engine.Limit(time=tlim))
     if board.uci(result) == "0000":
         break
+        print("Black Forfeit")
     board.push(result)
     print("\nBlack", file=open("game_debug.txt", "a+"))
     print(board.uci(result), file=open("game_debug.txt", "a+"))
     print(board, file=open("game_debug.txt", "a+"))
     print(board.uci(result), file=open("game_stack.pgn", "a+"))
 
-print('\n\nyou done\n\n')
+print('Game Compled\n\n')
