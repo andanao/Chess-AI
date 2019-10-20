@@ -25,7 +25,8 @@ class engine:
         best_node = root
         for cur in root.variations:
             # print(cur.board())
-            print(self.help.board_value(cur.board(),1))
+            test = self.help.board_value(cur.board(),1)
+            print(type(test))
             score = 1 #self.help.board_value(cur.board(),1)
             if score > best_score:
                 best_score = score

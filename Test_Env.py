@@ -4,7 +4,7 @@ import chess.engine
 import StraightforwardActionDetermining as eng1
 import RandomAllpurposeNonDeterministicOutcomeManipulation as eng2
 
-s
+
 print("\n\n\n\n\n\n\n")
 White = eng1.engine()
 Black = eng2.engine()
