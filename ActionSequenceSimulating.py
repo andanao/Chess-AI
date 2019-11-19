@@ -33,7 +33,7 @@ class engine:
                     best_score.clear()
                     movespace.clear()
                 best_score.append(test_space[i][1])
-               z movespace.append(test_space[i][0])
+                movespace.append(test_space[i][0])
                 
 
         best_move = random.choice(movespace)
