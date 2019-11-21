@@ -126,7 +126,7 @@ class meth:
     #     root = self.grow_twigs(board,player_col)
     #     tree_space = []
     #     for cur1 in root.variations:
-    #         child1 = self.grow_twigs(cur.board(),-player_col)
+    #         child1 = self.grow_twigs(cur1.board(),-player_col)
     #         for cur2 in child1.variations:
     #             child_2 = tree_space.append([cur1.comment[0], cur1.comment[1]])
 
