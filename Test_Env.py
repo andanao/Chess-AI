@@ -3,8 +3,8 @@ import random
 import chess
 import chess.engine
 import ActionSequenceSimulating as eng1
-import SingleActionDetermining as eng2
-# import RandomAllpurposeNonDeterministicOutcomeManipulation as eng2
+# import SingleActionDetermining as eng2
+import RandomAllpurposeNonDeterministicOutcomeManipulation as eng2
 # import RandomAllpurposeNonDeterministicOutcomeManipulation as eng1
 engine_1 = 'ASS'
 engine_2 = 'SAD'

@@ -128,7 +128,7 @@ class meth:
         for cur1 in root.variations:
             child1 = self.grow_twigs(cur.board(),-player_col)
             for cur2 in child1.variations:
-                child_2 = tree_space.append([cur1.comment[0], cur.comment[1]-])
+                child_2 = tree_space.append([cur1.comment[0], cur.comment[1]])
 
     # def recusive_tree(self,board,player_col,depth,depthlim):
     #     root = chess.pgn.Game()
