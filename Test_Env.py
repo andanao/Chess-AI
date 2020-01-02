@@ -2,14 +2,18 @@
 import random
 import chess
 import chess.engine
-import ActionSequenceSimulating as eng1
+# import ActionSequenceSimulating as eng1
 # import SingleActionDetermining as eng2
 import RandomAllpurposeNonDeterministicOutcomeManipulation as eng2
-# import RandomAllpurposeNonDeterministicOutcomeManipulation as eng1
+import RandomAllpurposeNonDeterministicOutcomeManipulation as eng1
 engine_1 = 'ASS'
 engine_2 = 'SAD'
 
+gamestack = open("game_stack.pgn", "w+")
+debug = open("game_debug.txt", "w+")
+
 print("\n\t--- o ---\n\nStarting Game:\n")
+
 if random.choice([True, False]):
     White = eng1.engine()
     Black = eng2.engine()
@@ -19,8 +23,8 @@ else:
     Black = eng1.engine()
     print(engine_1+" is Black, "+engine_2+" is White\n")
 
-print("", file=open("game_stack.pgn", "w+"), end="")
-print("", file=open("game_debug.txt", "w+"), end="")
+print("", gamestack, end="")
+print("", debug, end="")
 
 # debug_file = open("game_debug.txt", "a+")
 # stack_file = open("game_stack.pgn", "a+")
@@ -36,10 +40,10 @@ while not board.is_game_over():
         print("White Forefeit")
         break
     board.push(result)
-    print("\nWhite", file=open("game_debug.txt", "a+"))
-    print(board.uci(result), file=open("game_debug.txt", "a+"))
-    print(board, file=open("game_debug.txt", "a+"))
-    print(board.uci(result), file=open("game_stack.pgn", "a+"))
+    print("\nWhite", debug)
+    print(board.uci(result), debug)
+    print(board, debug)
+    print(board.uci(result), gamestack)
 
     if board.is_game_over():
         break
@@ -52,9 +56,9 @@ while not board.is_game_over():
         print("Black Forfeit")
         break
     board.push(result)
-    print("\nBlack", file=open("game_debug.txt", "a+"))
-    print(board.uci(result), file=open("game_debug.txt", "a+"))
-    print(board, file=open("game_debug.txt", "a+"))
-    print(board.uci(result), file=open("game_stack.pgn", "a+"))
+    print("\nBlack", debug)
+    print(board.uci(result), debug)
+    print(board, debug)
+    print(board.uci(result), gamestack)
 
 print('Game Compled\n\n')
