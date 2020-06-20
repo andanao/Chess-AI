@@ -8,8 +8,9 @@ class engine:
     Chess engine that makes a random move
     """
     # needs initializer
-    def __init__(self):
+    def __init__(self,tlim):
         self.turn = 0
+        self.tlim = tlim
     
     def play(self, board, tlim):
         help = helper.meth()
