@@ -119,40 +119,36 @@ class engine:
                 # print("BLACK\n\n")
                 self.color = -1
 
-
-
         if board.fullmove_number < self.max_turns:
-            mov_list = self.legal_move_list(board)
-            random_num = random.randint(0,len(mov_list)-1)
-            try:
-                optimal_play = board.parse_san(mov_list[random_num])
-            except:
-                print("something broke in the randomizer")
-                print(board)
-                print("tried: "+mov_list[random_num])
-                pass
-            return optimal_play
+            root = chess.pgn.Game.from_board(board)
+            moves = board.generate_legal_moves()
+            for item in moves:
+                print(item)
+                root.add_variation(item)
+            for var in root.variations:
+                #calculate board position and pick best
+                print(self.board_value(root.variation(var)))
+                # print(str(root.variation(var).board()))
+            # print(root.variations)
+            return chess.Move.null()
         else:
             return chess.Move.null()
     
 
-    def recursive_tree(self, board, depth, lim):
-        
-        if depth < lim:
-            # self.recursive_tree(self,board(child move),depth+1,lim)
-            pass
-        else:
-            pass
-"""
-recursive tree
-    build roots if depth < depth_lim
-    evaluate roots scores
-    save root scores, move to get there
-"""
+    def grow_twigs(self,board,player_col,game):
+        root = chess.pgn.Game()
+        root.setup(board.fen())
+        movelist = self.legal_move_list(board)
+        # movespace = []
+        for item in movelist:
+            child = chess.pgn.GameNode()
+            child.parent = root
+            child.move = board.parse_san(item)
+            score = self.board_value(child.board(),player_col)
+            child.comment = [child.move, score]
+            root.variations.append(child)
+        return root
 
-
-    def make_tree(self,board,depth):
-        pass
 
     def close(self):
         pass
