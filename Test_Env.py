@@ -11,11 +11,12 @@ import RandomEngine as eng2
 debug = open("game_debug.txt", "w")
 stack = open("game_stack.pgn", "w")
 
-print("\n\n\n\n\n\n\n")
-White = eng1.engine()
-Black = eng2.engine()
-
 tlim = 1
+
+print("\n\n\n\n\n\n\n")
+White = eng1.engine(tlim)
+Black = eng2.engine(tlim)
+
 board = chess.Board()
 
 while not board.is_game_over():

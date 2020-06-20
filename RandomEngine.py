@@ -8,8 +8,9 @@ class engine:
     Make a random move, just testing
     """
 
-    def __init__(self):
-        self.turn = 0        
+    def __init__(self,tlim):
+        self.turn = 0       
+        self.tlim = tlim 
         self.reg_parse = re.compile(r"(?:\w|\+|\#|\=|\-){2,6}(?=,|\))")
         self.piece_val = { 'P': 10, 'N': 25, 'B': 30, 'R': 50, 'Q': 100, 'K': 1000, 'p': -10, 'n': -25, 'b': -30, 'r': -50, 'q': -100, 'k': -1000}
         self.loc_val = {
@@ -94,3 +95,7 @@ class engine:
                 print(board)
                 print("tried: "+mov_list[random_num])
                 pass
+            return optimal_play
+    
+    def close(self):
+        pass
