@@ -1,2 +1,132 @@
+import random
 import chess
-import chess.engine
+import re
+import helper
+
+class engine:
+    """
+    Make a random move, just testing
+    """
+
+    def __init__(self,tlim):
+        self.turn = 0       
+        self.tlim = tlim 
+        self.reg_parse = re.compile(r"(?:\w|\+|\#|\=|\-){2,6}(?=,|\))")
+        self.piece_val = { 'P': 10, 'N': 25, 'B': 30, 'R': 50, 'Q': 100, 'K': 1000, 'p': -10, 'n': -25, 'b': -30, 'r': -50, 'q': -100, 'k': -1000}
+        self.loc_val = {
+            'P' : (
+                1,  1,  1,  1,  1,  1,  1,  1,
+                2,  2,  2,  3,  3,  2,  2,  2,
+                2,  2,  3,  4,  4,  3,  2,  2,
+                3,  3,  4,  5,  5,  4,  3,  3,
+                3,  3,  4,  5,  5,  4,  3,  3,
+                2,  2,  3,  4,  4,  3,  2,  2,
+                10, 10, 10, 10, 10, 10, 10, 10,
+                # 69, 69, 69, 69, 69, 69, 69, 69, 
+            ),
+            'N' : (
+                 1,	1,	1,	1,	1,	1,	1,	1,
+                2,	2,	2,	3,	3,	2,	2,	2,
+                2,	2,	3,	4,	4,	3,	2,	2,
+                3,	3,	4,	5,	5,	4,	3,	3,
+                3,	3,	4,	5,	5,	4,	3,	3,
+                2,	2,	3,	4,	4,	3,	2,	2,
+                2,	2,	2,	3,	3,	2,	2,	2,
+                1,	1,	1,	1,	1,	1,	1,	1, 
+            ), 
+           'B' : (
+                1,	1,	1,	1,	1,	1,	1,	1,
+                2,	2,	2,	3,	3,	2,	2,	2,
+                2,	2,	3,	4,	4,	3,	2,	2,
+                3,	3,	4,	5,	5,	4,	3,	3,
+                3,	3,	4,	5,	5,	4,	3,	3,
+                2,	2,	3,	4,	4,	3,	2,	2,
+                2,	2,	2,	3,	3,	2,	2,	2,
+                1,	1,	1,	1,	1,	1,	1,	1, 
+            ),
+            'R' : (
+                1,	1,	1,	1,	1,	1,	1,	1,
+                2,	2,	2,	3,	3,	2,	2,	2,
+                2,	2,	3,	4,	4,	3,	2,	2,
+                3,	3,	4,	5,	5,	4,	3,	3,
+                3,	3,	4,	5,	5,	4,	3,	3,
+                2,	2,	3,	4,	4,	3,	2,	2,
+                2,	2,	2,	3,	3,	2,	2,	2,
+                1,	1,	1,	1,	1,	1,	1,	1, 
+            ),
+            'Q' : (
+                1,	1,	1,	1,	1,	1,	1,	1,
+                2,	2,	2,	3,	3,	2,	2,	2,
+                2,	2,	3,	4,	4,	3,	2,	2,
+                3,	3,	4,	5,	5,	4,	3,	3,
+                3,	3,	4,	5,	5,	4,	3,	3,
+                2,	2,	3,	4,	4,	3,	2,	2,
+                2,	2,	2,	3,	3,	2,	2,	2,
+                1,	1,	1,	1,	1,	1,	1,	1, 
+            ),
+            'K' : (
+                0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0,
+            ),
+        }
+
+    def legal_move_list(self,board):
+        """
+        Get a list of legal moves in san notation
+        """
+        leg_move = board.legal_moves
+        leg_move_list = re.findall(self.reg_parse,str(leg_move))
+        return leg_move_list
+
+    def board_value(self,board):
+        """
+        Evaluate the board position to good bad number
+
+        player_col:
+            WHITE = 1
+            BLACK = -1
+        """
+        value = 0
+        pmap = board.piece_map()
+        for key in pmap:
+            peice = pmap[key]
+            value += self.piece_val[peice.symbol()]
+            if peice.color and self.color == 1:
+                value += self.loc_val[peice.symbol()][key]
+            elif not(peice.color) and self.color == -1:
+                value += self.loc_val[peice.symbol().capitalize()][63-key]
+
+        return value
+
+    def play(self,board,tlim):
+        if not hasattr(self,'color'):
+            if board.turn == chess.WHITE:
+                print('WHITE')
+                self.color = 1 #
+            else:
+                print("BLACK")
+                self.color = -1
+                self.piece_val = self.color*self.piece_val #flip the points values for peices if black
+        self.turn += 1
+        if self.turn <2:
+            mov_list = self.legal_move_list(board)
+            random_num = random.randint(0,len(mov_list)-1)
+            try:
+                optimal_play = board.parse_san(mov_list[random_num])
+            except:
+                print("something broke in the randomizer")
+                print(board)
+                print("tried: "+mov_list[random_num])
+                pass
+            return optimal_play
+        else:
+            return chess.Move.null()
+    
+    def close(self):
+        pass

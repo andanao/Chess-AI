@@ -3,8 +3,9 @@ import chess.engine
 import math
 import time
 
-import RandomEngine as eng1
+# import RandomEngine as eng1
 import RandomEngine as eng2
+import Shephards2020 as eng1
 #import rematch as eng1
 # import rematch as eng2
 
@@ -21,11 +22,11 @@ board = chess.Board()
 
 while not board.is_game_over():
 
-    start_time = time.clock()
+    # start_time = time.clock()
     result = White.play(board, chess.engine.Limit(time=tlim))
-    end_time = time.clock()
-    if end_time - start_time > tlim:
-        print("went over time by " + str(end_time - start_time - tlim) + " sec")
+    # end_time = time.clock()
+    # if end_time - start_time > tlim:
+        # print("went over time by " + str(end_time - start_time - tlim) + " sec")
     if board.uci(result) == "0000":
         print("white null")
         break
@@ -39,11 +40,11 @@ while not board.is_game_over():
     if board.turn > 50:
         break
 
-    start_time = time.clock()
+    # start_time = time.clock()
     result = Black.play(board, chess.engine.Limit(time=tlim))
-    end_time = time.clock()
-    if end_time - start_time > tlim:
-        print("went over time by " + str(end_time - start_time - tlim) + " sec")
+    # end_time = time.clock()
+    # if end_time - start_time > tlim:
+        # print("went over time by " + str(end_time - start_time - tlim) + " sec")
     if board.uci(result) == "0000":
         print("black null")
         break
@@ -55,4 +56,4 @@ while not board.is_game_over():
 debug.close()
 stack.close()
 print('\n\nGG!')
-print(str(board.result())+' in '+str(math.ceil(len(board.move_stack)/2))+'\n\n')
+# print(str(board.result())+' in '+str(math.ceil(len(board.move_stack)/2))+'\n\n')
