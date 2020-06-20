@@ -122,37 +122,29 @@ class engine:
                 self.color = -1
 
         if board.fullmove_number < self.max_turns:
-            root = chess.pgn.Game.from_board(board)
-            moves = root.board().generate_legal_moves()
-            # moves = self.legal_move_list(board)
-            moves_uci =[]
+            root = chess.pgn.Game()
+            root.setup(board.fen())
+            moves = root.board().legal_moves
+            for var in root.variations:
+                print("PRE MOVE:\t"+str(var.move))
             for item in moves:
                 root.add_variation(item)
-                # print(root.variation(item).board())
+            for var in root.variations:
+                print("MOVE:\t"+str(var.move))
             best_score = -100000
             possible_moves = []
-            print(moves_uci)
+
             i=0
             for var in root.variations:
-                moves_uci.append(var.uci())
-                i+=1
-                # print(i)
-                # print(var)
-                try:
-                    temp_score = 2
-                        # temp_score = self.board_value(var.board(),self.color)
-                    # print('made it')
-                    try:
-                        if(temp_score >= best_score):
-                            if(temp_score > best_score):
-                                # possible_moves.clear()
-                                best_score = temp_score
-                    except:
-                        print("bad ifs")
-                    print(var.uci)
+  
+            
+                temp_score = 2
+                 
+                if(temp_score >= best_score):
+                    if(temp_score > best_score):
+                        best_score = temp_score
                     possible_moves.append(var.uci())
-                except:
-                    print("it be here you fuck\n\n")
+         
             
             print(possible_moves)
             final_move = possible_moves[random.randint(0,len(possible_moves)-1)]
