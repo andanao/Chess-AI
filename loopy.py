@@ -183,7 +183,7 @@ class engine:
                     value = result
                     pointer = child
 
-                alpha = max(alpha, value)
+                beta = min(alpha, value)
                 if alpha <= beta:
                     break #beta cutoff
             return value, pointer
@@ -201,10 +201,3 @@ class engine:
             value += fen.count(peice)*self.piece_val[peice]
         return value
 
-
-    def close(self):
-        pass
-
-    def request (self):
-        print("Nathan requested to go fuck himself")
-        return []

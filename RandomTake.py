@@ -111,9 +111,3 @@ class engine:
         else:
             return chess.Move.null()
     
-    def close(self):
-        pass
-
-    def request (self):
-        print("Nathan requested to go fuck himself")
-        return []

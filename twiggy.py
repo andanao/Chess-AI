@@ -152,10 +152,3 @@ class engine:
     def get_best_variation(self,root):
         pass
 
-
-    def close(self):
-        pass
-
-    def request (self):
-        print("Nathan requested to go fuck himself")
-        return []
