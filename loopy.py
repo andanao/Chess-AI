@@ -154,15 +154,9 @@ class engine:
                 # print(depth)
                 
     def alphabeta(self, node, depth, alpha, beta, max_player):
-        # if depth == 0:
-        #     print("depth 0")
-        #     # return node.move
         pointer = None
         if node.is_end():
-            print("node end")
-            # return node.move
             return (self.eval_board(node), pointer)
-            # return 
         if max_player:
             value = -10000000
             for child in node.variations:
@@ -174,7 +168,6 @@ class engine:
 
                 alpha = max(alpha, value)
                 if alpha >= beta:
-                    print('beta cut')
                     break #beta cutoff
             return value, pointer
         else:
@@ -188,7 +181,6 @@ class engine:
 
                 alpha = max(alpha, value)
                 if alpha <= beta:
-                    print('beta cut')
                     break #beta cutoff
             return value, pointer
 
