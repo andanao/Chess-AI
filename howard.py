@@ -13,8 +13,10 @@ class engine:
         self.GLOBAL_HIGH = 100000
         self.GLOBAL_LOW = -self.GLOBAL_HIGH
         self.max_turns = 75
+        self.depth = 3
         self.counter = 0       
         self.tlim = tlim 
+        self.last_loop_time = float(tlim*5)
         self.reg_parse = re.compile(r"(?:\w|\+|\#|\=|\-){2,6}(?=,|\))")
         self.piece_val = { 'P': 1, 'N': 3, 'B': 3, 'R': 5, 'Q': 9, 'K': 1000, 'p': -1, 'n': -3, 'b': -3, 'r': -5, 'q': -9, 'k': -1000}
         self.loc_val = {
@@ -87,7 +89,7 @@ class engine:
             chess.KING : 1
         }
         self.square_values = (
-            1, 2, 2, 2, 2, 2, 2, 1,
+             1, 2, 2, 2, 2, 2, 2, 1,
              1, 1, 1, 1, 1, 1, 1, 1, 
              1, 5, 8, 6, 6, 8, 5, 1, 
              1, 1, 6, 9, 9, 6, 1, 1, 
@@ -148,14 +150,27 @@ class engine:
         if board.fullmove_number < self.max_turns:
             root = chess.pgn.Game()
             root.setup(board.fen())
-            # start_time = time.time()
-            depth = 3
-            self.recursive_tree(root,0,depth)
-            # end_time = time.time()
+            start_time = time.time()
+            self.recursive_tree(root,0,self.depth)
             # print("Time for Depth "+str(depth)+"\n\t"+str(end_time-start_time))
             play = self.alphabeta(root,0,self.GLOBAL_LOW,self.GLOBAL_HIGH,root.board().turn) #fix this true
+            end_time = time.time()
+            self.last_loop_time = end_time - start_time
+            
+            print("self depth:\t"+str(self.depth)+'\tcounter'+str(self.counter))
+            print('tdiff\t'+str(self.last_loop_time*5)+"\ttlim\t"+str(self.tlim))
+
+            if (self.last_loop_time*10<self.tlim):
+                if self.counter > 10:
+                    self.depth += 1
+                    print("\t!!!\tincreasing depth\t!!!")
+            elif (self.last_loop_time>self.tlim):
+                if self.depth>3:
+                    self.depth -= 1
+                    print("\t!!!\tdecreaseing depth\t!!!")
+
             # print('Move Val:\t'+str(val))
-            self.counter = 0
+            self.counter += 1
             return play.move
         else:
             return chess.Move.null()
@@ -173,7 +188,7 @@ class engine:
                 
     def alphabeta(self, node, depth, alpha, beta, max_player):
         pointer = None
-        self.counter+=1
+        # self.counter+=1
         # print('Count \t'+str(self.counter)+"\t Depth:\t"+str(depth))
         if node.is_end():
             return (self.eval_board(node))
@@ -215,7 +230,6 @@ class engine:
                 return value
 
     def eval_board(self,node):
-        # return random.randint(-1000,1000)
         """
         Evaluate the board position 
             WHITE = MAXIMIZER
@@ -241,9 +255,8 @@ class engine:
 
             ret = piece_v*1000 + square_v
         # node.comment = str(ret)
-        ret = ret*random.uniform(.95,1.05)
+        # ret = ret*random.uniform(.95,1.05)
         return ret
-
 
     def evaluate_square(self, square, piece):
         value = self.square_values[square]

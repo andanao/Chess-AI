@@ -4,8 +4,8 @@ import math
 import time
 
 import howard as eng1
-import loopy as eng2
-# import RandomEngine as eng2
+# import loopy as eng2
+import RandomTake as eng2
 # import rematch2 as eng1
 
 debug = open("game_debug.txt", "w")
@@ -45,7 +45,7 @@ def take_turn(board, engine):
 
 
 if __name__ == '__main__':
-    tlim = 10
+    tlim = 5
     print("\n\n\n\n\n\n\n")
     white_engine = eng1.engine(tlim)
     black_engine = eng2.engine(tlim)
