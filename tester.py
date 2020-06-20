@@ -38,4 +38,4 @@ moves=[
 
 for item in moves:
     if 'x' in item:
-        print(item)
+        print("\n"+item)
