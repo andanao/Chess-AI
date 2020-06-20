@@ -144,3 +144,7 @@ class engine:
 
     def close(self):
         pass
+
+    def request (self):
+        print("Nathan requested to go fuck himself")
+        return []
