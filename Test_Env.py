@@ -15,9 +15,9 @@ def take_turn(board, engine):
     color = "White"
     if board.turn == chess.BLACK:
         color = "Black"
-    start_time = time.clock()
+    start_time = time.time()
     result = engine.play(board, chess.engine.Limit(time=tlim))
-    end_time = time.clock()
+    end_time = time.time()
     if end_time - start_time > tlim:
         print("went over time by " + str(end_time - start_time - tlim) + " sec")
     if board.uci(result) == "0000":
