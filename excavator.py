@@ -1,7 +1,5 @@
 import random
 import chess
-import re
-import helper
 import chess.pgn
 import time
 
@@ -16,10 +14,12 @@ class engine:
         self.depth = 3
         self.counter = 0 
          
-        self.tmargin = .8
+        self.tmargin = .5
         self.tlim = tlim 
-        self.turn_tlim = .8*tlim
+        self.turn_tlim = self.tmargin*tlim
         self.last_loop_time = float(tlim*5)
+
+        self.max_depth = 6
 
         self.piece_values = {
             chess.PAWN : 1,
@@ -46,27 +46,12 @@ class engine:
         """
         root = chess.pgn.Game()
         root.setup(board.fen())
-        start_time = time.time()
+        self.start_time = time.time()
         self.recursive_tree(root,0,self.depth)
         # print("Time for Depth "+str(depth)+"\n\t"+str(end_time-start_time))
         play = self.alphabeta(root,0,self.GLOBAL_LOW,self.GLOBAL_HIGH,root.board().turn) #fix this true
         end_time = time.time()
-        self.last_loop_time = end_time - start_time
         
-        print("self depth:\t"+str(self.depth)+'\tcounter'+str(self.counter))
-        print('tdiff\t'+str(self.last_loop_time*5)+"\ttlim\t"+str(self.tlim))
-
-        if (self.last_loop_time*10<self.tlim):
-            if self.counter > 10:
-                self.depth += 1
-                print("\t!!!\tincreasing depth\t!!!")
-        elif (self.last_loop_time>self.tlim):
-            if self.depth>3:
-                self.depth -= 1
-                print("\t!!!\tdecreaseing depth\t!!!")
-
-        # print('Move Val:\t'+str(val))
-        self.counter += 1
         return play.move
 
     
@@ -77,26 +62,50 @@ class engine:
         if (depth<depth_lim):
             for item in node.board().legal_moves:
                 node.add_variation(item)
+                # node.comment = int(depth)
             for var in node.variations:
                 self.recursive_tree(var,depth+1,depth_lim)
                 # print(depth)
-                
+
+    def make_leaves(self,node):
+        """Build out 1 layer of children from a given node"""
+        for var in node.board().legal_moves:
+            node.add_variation(var)
+            node.variation(var).comment=int(node.comment)+1
+        # pass
+    
+    def time_left(self):
+        if (time.time()-self.start_time) > self.turn_tlim:
+            return True
+        else:
+            return False
+
     def alphabeta(self, node, depth, alpha, beta, max_player):
         pointer = None
         # self.counter+=1
         # print('Count \t'+str(self.counter)+"\t Depth:\t"+str(depth))
         if node.is_end():
-            return (self.eval_board(node))
+            if self.time_left():
+                pboard = node.parent.board()
+                nboard = node.board()
+                if nboard.is_check():
+                    self.recursive_tree(node,depth+1,depth + 2)
+                if pboard.is_capture(node.move):#need parent
+                    self.recursive_tree(node,depth+1,depth + 2)
+                    # print("capture "+str(node.move))
+                    # print("parent "+str(node.parent.move))
+
+                #     pass
+            else:
+                return (self.eval_board(node))
             # print('node end')
         if max_player:
             value = self.GLOBAL_LOW
             for child in node.variations:
                 result = self.alphabeta(child, depth + 1, alpha, beta, False)
-
                 if result > value:
                     value = result
                     pointer = child
-
                 alpha = max(alpha, value)
                 if alpha >= beta:
                     # print('beta cutoff')
@@ -150,7 +159,7 @@ class engine:
 
             ret = piece_v*1000 + square_v
         # node.comment = str(ret)
-        # ret = ret*random.uniform(.95,1.05)
+        ret = ret*random.uniform(.95,1.05)
         return ret
 
     def evaluate_square(self, square, piece):

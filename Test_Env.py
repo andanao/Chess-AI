@@ -27,7 +27,7 @@ def take_turn(board, engine):
     end_time = time.time()
     if end_time - start_time > tlim:
         print("went over time by " + str(end_time - start_time - tlim) + " sec")
-        if board.turn:
+        if board.turn: 
             white_error_time += end_time - start_time - tlim
         else:
             black_error_time += end_time - start_time - tlim
@@ -47,7 +47,7 @@ def take_turn(board, engine):
 
 
 if __name__ == '__main__':
-    tlim = 2
+    tlim = 1
     print("\n\n\n\n\n\n\n")
     white_engine = eng1.engine(tlim)
     black_engine = eng2.engine(tlim)
