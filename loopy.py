@@ -14,8 +14,8 @@ class engine:
         self.turn = 0       
         self.tlim = tlim 
         self.reg_parse = re.compile(r"(?:\w|\+|\#|\=|\-){2,6}(?=,|\))")
-        self.white.piece_val = { 'P': 10, 'N': 25, 'B': 30, 'R': 50, 'Q': 100, 'K': 1000, 'p': -10, 'n': -25, 'b': -30, 'r': -50, 'q': -100, 'k': -1000}
-        self.white.loc_val = {
+        self.whitepiece_val = { 'P': 10, 'N': 25, 'B': 30, 'R': 50, 'Q': 100, 'K': 1000, 'p': -10, 'n': -25, 'b': -30, 'r': -50, 'q': -100, 'k': -1000}
+        self.whiteloc_val = {
             'P' : (
                 1,  1,  1,  1,  1,  1,  1,  1,
                 2,  2,  2,  3,  3,  2,  2,  2,
@@ -77,8 +77,8 @@ class engine:
                 0, 0, 0, 0, 0, 0, 0, 0,
             ),
         }
-        self.black.piece_val = { 'P': -10, 'N': -25, 'B': -30, 'R': -50, 'Q': -100, 'K': -1000, 'p': 10, 'n': 25, 'b': 30, 'r': 50, 'q': 100, 'k': 1000}
-        self.black.loc_val = {
+        self.blackpiece_val = { 'P': -10, 'N': -25, 'B': -30, 'R': -50, 'Q': -100, 'K': -1000, 'p': 10, 'n': 25, 'b': 30, 'r': 50, 'q': 100, 'k': 1000}
+        self.blackloc_val = {
             'P' : (
                 10, 10, 10, 10, 10, 10, 10, 10,
                 2,  2,  3,  4,  4,  3,  2,  2,
@@ -216,27 +216,10 @@ class engine:
             print('max')
         pass
 
-    def min_max(self,root):
-        """
-        Does what it says on the box
-        """
-        print('TODO')
+    def alphabeta(self,node):
         pass
 
-    def min_chess(self):
-        print('TODO')
-        pass
-
-    def max_chess(self):
-        print('TODO')
-        pass
-    
-    def score_player(self,board):
-        print('TODO')
-        pass
-    
-    def score_opponent(self,board):
-        print('TODO')
+    def eval_board(self,board):
         pass
 
     def close(self):
