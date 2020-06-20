@@ -14,9 +14,11 @@ class engine:
         self.GLOBAL_LOW = -self.GLOBAL_HIGH
         self.max_turns = 200
         self.depth = 3
-        self.counter = 0  
-
+        self.counter = 0 
+         
+        self.tmargin = .8
         self.tlim = tlim 
+        self.turn_tlim = .8*tlim
         self.last_loop_time = float(tlim*5)
 
         self.piece_values = {
@@ -42,43 +44,31 @@ class engine:
         """
         Play a turn witht the chess engine
         """
-        if not hasattr(self,'color'):
-            if board.turn == chess.WHITE:
-                # print('WHITE\n\n')
-                self.color = 1 #
-                self.agent = True
-            else:
-                # print("BLACK\n\n")
-                self.color = -1
-                self.agent = False
+        root = chess.pgn.Game()
+        root.setup(board.fen())
+        start_time = time.time()
+        self.recursive_tree(root,0,self.depth)
+        # print("Time for Depth "+str(depth)+"\n\t"+str(end_time-start_time))
+        play = self.alphabeta(root,0,self.GLOBAL_LOW,self.GLOBAL_HIGH,root.board().turn) #fix this true
+        end_time = time.time()
+        self.last_loop_time = end_time - start_time
+        
+        print("self depth:\t"+str(self.depth)+'\tcounter'+str(self.counter))
+        print('tdiff\t'+str(self.last_loop_time*5)+"\ttlim\t"+str(self.tlim))
 
-        if board.fullmove_number < self.max_turns:
-            root = chess.pgn.Game()
-            root.setup(board.fen())
-            start_time = time.time()
-            self.recursive_tree(root,0,self.depth)
-            # print("Time for Depth "+str(depth)+"\n\t"+str(end_time-start_time))
-            play = self.alphabeta(root,0,self.GLOBAL_LOW,self.GLOBAL_HIGH,root.board().turn) #fix this true
-            end_time = time.time()
-            self.last_loop_time = end_time - start_time
-            
-            print("self depth:\t"+str(self.depth)+'\tcounter'+str(self.counter))
-            print('tdiff\t'+str(self.last_loop_time*5)+"\ttlim\t"+str(self.tlim))
+        if (self.last_loop_time*10<self.tlim):
+            if self.counter > 10:
+                self.depth += 1
+                print("\t!!!\tincreasing depth\t!!!")
+        elif (self.last_loop_time>self.tlim):
+            if self.depth>3:
+                self.depth -= 1
+                print("\t!!!\tdecreaseing depth\t!!!")
 
-            if (self.last_loop_time*10<self.tlim):
-                if self.counter > 10:
-                    self.depth += 1
-                    print("\t!!!\tincreasing depth\t!!!")
-            elif (self.last_loop_time>self.tlim):
-                if self.depth>3:
-                    self.depth -= 1
-                    print("\t!!!\tdecreaseing depth\t!!!")
+        # print('Move Val:\t'+str(val))
+        self.counter += 1
+        return play.move
 
-            # print('Move Val:\t'+str(val))
-            self.counter += 1
-            return play.move
-        else:
-            return chess.Move.null()
     
     def recursive_tree(self,node,depth,depth_lim):
         """
