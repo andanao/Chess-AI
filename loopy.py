@@ -9,9 +9,9 @@ class engine:
     """
     Using recursion
     """
-    GLOBAL_HIGH = 100000
-    GLOBAL_LOW = -GLOBAL_HIGH
     def __init__(self,tlim):
+        self.GLOBAL_HIGH = 100000
+        self.GLOBAL_LOW = -self.GLOBAL_HIGH
         self.max_turns = 75
         self.counter = 0       
         self.tlim = tlim 
@@ -153,9 +153,7 @@ class engine:
             self.recursive_tree(root,0,depth)
             # end_time = time.time()
             # print("Time for Depth "+str(depth)+"\n\t"+str(end_time-start_time))
-            alpha = 1000
-            beta = -alpha
-            play = self.alphabeta(root,0,alpha,beta,root.board().turn) #fix this true
+            play = self.alphabeta(root,0,self.GLOBAL_LOW,self.GLOBAL_HIGH,root.board().turn) #fix this true
             # print('Move Val:\t'+str(val))
             self.counter = 0
             return play.move
@@ -176,7 +174,7 @@ class engine:
     def alphabeta(self, node, depth, alpha, beta, max_player):
         pointer = None
         self.counter+=1
-        print('Count \t'+str(self.counter)+"\t Depth:\t"+str(depth))
+        # print('Count \t'+str(self.counter)+"\t Depth:\t"+str(depth))
         if node.is_end():
             return (self.eval_board(node))
             # print('node end')
@@ -223,6 +221,7 @@ class engine:
             WHITE = MAXIMIZER
             BLACK = minimizer
         """
+        ret=0
         board = node.board()
         if(board.is_game_over()):
             res = board.result()
