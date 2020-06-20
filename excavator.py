@@ -62,17 +62,10 @@ class engine:
         if (depth<depth_lim):
             for item in node.board().legal_moves:
                 node.add_variation(item)
-                # node.comment = int(depth)
             for var in node.variations:
                 self.recursive_tree(var,depth+1,depth_lim)
                 # print(depth)
 
-    def make_leaves(self,node):
-        """Build out 1 layer of children from a given node"""
-        for var in node.board().legal_moves:
-            node.add_variation(var)
-            node.variation(var).comment=int(node.comment)+1
-        # pass
     
     def time_left(self):
         if (time.time()-self.start_time) > self.turn_tlim:
@@ -90,13 +83,16 @@ class engine:
                 nboard = node.board()
                 if nboard.is_check():
                     self.recursive_tree(node,depth+1,depth + 2)
-                if pboard.is_capture(node.move):#need parent
+                elif pboard.is_capture(node.move):#need parent
                     self.recursive_tree(node,depth+1,depth + 2)
+                    # print(depth)
                     # print("capture "+str(node.move))
                     # print("parent "+str(node.parent.move))
-
+                else:
+                    return (self.eval_board(node))
                 #     pass
             else:
+                # print("no time")
                 return (self.eval_board(node))
             # print('node end')
         if max_player:
