@@ -143,7 +143,16 @@ class engine:
                 self.recursive_tree(var,depth+1,depth_lim)
                 # print(depth)
                 
+    def favorite_child(self,node,depth):
+        if depth%2:
+            print("min")
+            score = 1000000
+            for var in node.variations:
+                score = self.board_value(var.board,self.color*-1)
 
+        else:
+            print('max')
+        pass
 
     def min_max(self,root):
         """
@@ -159,7 +168,14 @@ class engine:
     def max_chess(self):
         print('TODO')
         pass
-
+    
+    def score_player(self,board):
+        print('TODO')
+        pass
+    
+    def score_opponent(self,board):
+        print('TODO')
+        pass
 
     def close(self):
         pass
