@@ -143,7 +143,7 @@ class engine:
             
             # print(possible_moves)
             final_move = possible_moves[random.randint(0,len(possible_moves)-1)]
-            # print("\t\t!!! \t "+ str(final_move))
+            print("\t\t!!! \t "+ str(type(final_move)))
             return chess.Move.from_uci(str(final_move))
             # return chess.Move.null()
         else:

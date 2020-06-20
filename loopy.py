@@ -5,6 +5,8 @@ import helper
 import chess.pgn
 import time
 
+
+
 class engine:
     """
     Using recursion
@@ -119,20 +121,24 @@ class engine:
             if board.turn == chess.WHITE:
                 # print('WHITE\n\n')
                 self.color = 1 #
+                self.agent = True
             else:
                 # print("BLACK\n\n")
                 self.color = -1
+                self.agent = False
 
         if board.fullmove_number < self.max_turns:
             root = chess.pgn.Game()
             root.setup(board.fen())
-            start_time = time.time()
+            # start_time = time.time()
             depth = 3
             self.recursive_tree(root,0,depth)
-            end_time = time.time()
-            print("Time for Depth "+str(depth)+"\n\t"+str(end_time-start_time))
-
-            return chess.Move.null()
+            # end_time = time.time()
+            # print("Time for Depth "+str(depth)+"\n\t"+str(end_time-start_time))
+            alpha = 1000
+            beta = -alpha
+            val, play = self.alphabeta(root,0,alpha,beta,self.agent) #fix this true
+            return play.move
         else:
             return chess.Move.null()
     
@@ -147,24 +153,44 @@ class engine:
                 self.recursive_tree(var,depth+1,depth_lim)
                 # print(depth)
                 
-    def alphabeta(self,node,depth,alpha,beta,max_player):
-        if depth == 0 or node.is_end():
-            return self.eval_board(node)
+    def alphabeta(self, node, depth, alpha, beta, max_player):
+        # if depth == 0:
+        #     print("depth 0")
+        #     # return node.move
+        pointer = None
+        if node.is_end():
+            print("node end")
+            # return node.move
+            return (self.eval_board(node), pointer)
+            # return 
         if max_player:
             value = -10000000
             for child in node.variations:
-                value = self.alphabeta(child, depth - 1, alpha, beta, False)
+                result, _ = self.alphabeta(child, depth + 1, alpha, beta, False)
+
+                if result > value:
+                    value = result
+                    pointer = child
+
                 alpha = max(alpha, value)
                 if alpha >= beta:
+                    print('beta cut')
                     break #beta cutoff
-            return value
+            return value, pointer
         else:
-            value =  10000000
+            value = 10000000
             for child in node.variations:
-                value = self.alphabeta(child,depth - 1, alpha, beta, True)
-                beta = min (beta, value)
-                if beta <= alpha:
-                    break #alpha cutoff
+                result, _ = self.alphabeta(child, depth + 1, alpha, beta, True)
+
+                if result < value:
+                    value = result
+                    pointer = child
+
+                alpha = max(alpha, value)
+                if alpha <= beta:
+                    print('beta cut')
+                    break #beta cutoff
+            return value, pointer
 
     def eval_board(self,board):
         return random.randint(-1000,1000)

@@ -33,7 +33,7 @@ def take_turn(board, engine):
 if __name__ == '__main__':
     tlim = 1
 
-    print("\n\n\n\n\n\n\n\t----Starting\t----")
+    print("\n\n\n\n\n\n\n\t----\tStarting\t----")
     white_engine = eng1.engine(tlim)
     black_engine = eng2.engine(tlim)
     engines = {True : white_engine, False: black_engine}
@@ -46,9 +46,7 @@ if __name__ == '__main__':
             break
         board = temp_board
         if board.is_game_over():
-            break
-        if board.turn > 50:
-            break
+            break 
 
     white_engine.close()
     black_engine.close()
