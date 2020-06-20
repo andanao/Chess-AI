@@ -206,7 +206,7 @@ class engine:
                     pointer = child
 
                 beta = min(alpha, value)
-                if alpha <= beta:
+                if beta <= alpha:
                     # print('alpha cutoff')
                     break #beta cutoff
             if depth == 0:
