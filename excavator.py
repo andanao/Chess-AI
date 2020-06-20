@@ -47,10 +47,9 @@ class engine:
         root = chess.pgn.Game()
         root.setup(board.fen())
         self.start_time = time.time()
-        self.recursive_tree(root,0,self.depth)
+        self.recursive_tree(root,0,self.depth-1)
         # print("Time for Depth "+str(depth)+"\n\t"+str(end_time-start_time))
         play = self.alphabeta(root,0,self.GLOBAL_LOW,self.GLOBAL_HIGH,root.board().turn) #fix this true
-        end_time = time.time()
         
         return play.move
 
@@ -64,7 +63,6 @@ class engine:
                 node.add_variation(item)
             for var in node.variations:
                 self.recursive_tree(var,depth+1,depth_lim)
-                # print(depth)
 
     
     def time_left(self):
@@ -78,23 +76,23 @@ class engine:
         # self.counter+=1
         # print('Count \t'+str(self.counter)+"\t Depth:\t"+str(depth))
         if node.is_end():
-            if self.time_left():
+            if self.time_left() and depth < 6:
                 pboard = node.parent.board()
                 nboard = node.board()
-                if nboard.is_check():
+                iscap = pboard.is_capture(node.move)
+                # pboard.push(node.move)
+                if nboard.is_check() or iscap:
                     self.recursive_tree(node,depth+1,depth + 2)
-                elif pboard.is_capture(node.move):#need parent
-                    self.recursive_tree(node,depth+1,depth + 2)
-                    # print(depth)
-                    # print("capture "+str(node.move))
-                    # print("parent "+str(node.parent.move))
                 else:
+                    # self.alphabeta
                     return (self.eval_board(node))
                 #     pass
             else:
                 # print("no time")
                 return (self.eval_board(node))
             # print('node end')
+
+
         if max_player:
             value = self.GLOBAL_LOW
             for child in node.variations:
@@ -120,7 +118,7 @@ class engine:
                     value = result
                     pointer = child
 
-                beta = min(alpha, value)
+                beta = min(beta, value)
                 if beta <= alpha:
                     # print('alpha cutoff')
                     break #beta cutoff

@@ -161,7 +161,7 @@ class engine:
             print('tdiff\t'+str(self.last_loop_time*5)+"\ttlim\t"+str(self.tlim))
 
             if (self.last_loop_time*10<self.tlim):
-                if self.counter > 10:
+                if self.counter > 3:
                     self.depth += 1
                     print("\t!!!\tincreasing depth\t!!!")
             elif (self.last_loop_time>self.tlim):
