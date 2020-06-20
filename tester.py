@@ -3,27 +3,7 @@ moves=[
         'Rh7',
         'Rh6',
         'Kg8',
-        'Ke8',
-        'Kf7',
-        'Ke7',
-        'Bd7',
-        'Nd7',
-        'Qd8',
-        'Qf7',
-        'Qe7',
-        'Qh6',
-        'Qg6',
-        'Qxg5',
-        'Qe5',
-        'Qxd4+',
-        'Ra8',
-        'Ra7',
-        'Rb6',
-        'Bc5',
-        'Bb4',
-        'Bb2',
-        'Bxc1',
-        'Ng3',
+        'Kex8',
         'Ne3',
         'Nh2',
         'Nd2',
@@ -35,7 +15,9 @@ moves=[
         'c5',
         'f4'
 ]
+moves.clear()
+moves.append("testxxx")
 
 for item in moves:
-    if 'x' in item:
-        print("\n"+item)
+    # if 'x' in item:
+    print(item)

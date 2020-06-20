@@ -83,12 +83,7 @@ class engine:
         Get a list of legal moves in san notation
         """
         leg_move = board.legal_moves
-        test = board.generate_legal_moves()
-        # print('testing legal move gen')
-        # for item in test:
-        #     print("\t"+str(item))
         leg_move_list = re.findall(self.reg_parse,str(leg_move))
-        # print(board.legal_moves)
         return leg_move_list
 
     def board_value(self,board,player_col):
@@ -99,18 +94,23 @@ class engine:
             WHITE = 1
             BLACK = -1
         """
-        value = 0
-        pmap = board.piece_map()
-        for key in pmap:
-            peice = pmap[key]
-            value += self.piece_val[peice.symbol()]*player_col
-            if peice.color and player_col == 1:
-                value += self.loc_val[peice.symbol()][key]
-            elif not(peice.color) and player_col == -1:
-                # value += self.loc_val[peice.symbol().capitalize()][63-key]
-                value += self.loc_val[peice.symbol().capitalize()][63 - key]
+        try:
+            value = 0
+            pmap = board.piece_map()
+            for key in pmap:
+                peice = pmap[key]
+                value += self.piece_val[peice.symbol()]*player_col
 
-        return value
+                if peice.color and player_col == 1:
+                    value += self.loc_val[peice.symbol()][key]
+                elif not(peice.color) and player_col == -1:
+                    # value += self.loc_val[peice.symbol().capitalize()][63-key]
+                    value += self.loc_val[peice.symbol().capitalize()][63 - key]
+        except:
+            print("it should be in this section")
+
+        # return value
+        return 2
 
     def play(self,board,tlim):
         if not hasattr(self,'color'):
@@ -123,22 +123,37 @@ class engine:
 
         if board.fullmove_number < self.max_turns:
             root = chess.pgn.Game.from_board(board)
-            moves = board.generate_legal_moves()
+            moves = root.board().generate_legal_moves()
+            # moves = self.legal_move_list(board)
+            moves_uci =[]
             for item in moves:
                 root.add_variation(item)
+                # print(root.variation(item).board())
             best_score = -100000
             possible_moves = []
-
+            print(moves_uci)
+            i=0
             for var in root.variations:
-                temp_score = self.board_value(root.variation(var).board(),self.color)
-
-                if temp_score > best_score:
-                    possible_moves.clear()
-                    possible_moves.append(root.variation(var).uci())
-                    best_score = temp_score
-                elif temp_score == best_score:
-                    possible_moves.append(root.variation(var).uci())
-
+                moves_uci.append(var.uci())
+                i+=1
+                # print(i)
+                # print(var)
+                try:
+                    temp_score = 2
+                        # temp_score = self.board_value(var.board(),self.color)
+                    # print('made it')
+                    try:
+                        if(temp_score >= best_score):
+                            if(temp_score > best_score):
+                                # possible_moves.clear()
+                                best_score = temp_score
+                    except:
+                        print("bad ifs")
+                    print(var.uci)
+                    possible_moves.append(var.uci())
+                except:
+                    print("it be here you fuck\n\n")
+            
             print(possible_moves)
             final_move = possible_moves[random.randint(0,len(possible_moves)-1)]
             print("\t\t!!! \t "+ str(final_move))
