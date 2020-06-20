@@ -14,8 +14,8 @@ class engine:
         self.turn = 0       
         self.tlim = tlim 
         self.reg_parse = re.compile(r"(?:\w|\+|\#|\=|\-){2,6}(?=,|\))")
-        self.piece_val = { 'P': 10, 'N': 25, 'B': 30, 'R': 50, 'Q': 100, 'K': 1000, 'p': -10, 'n': -25, 'b': -30, 'r': -50, 'q': -100, 'k': -1000}
-        self.loc_val = {
+        self.white.piece_val = { 'P': 10, 'N': 25, 'B': 30, 'R': 50, 'Q': 100, 'K': 1000, 'p': -10, 'n': -25, 'b': -30, 'r': -50, 'q': -100, 'k': -1000}
+        self.white.loc_val = {
             'P' : (
                 1,  1,  1,  1,  1,  1,  1,  1,
                 2,  2,  2,  3,  3,  2,  2,  2,
@@ -24,6 +24,69 @@ class engine:
                 3,  3,  4,  5,  5,  4,  3,  3,
                 2,  2,  3,  4,  4,  3,  2,  2,
                 10, 10, 10, 10, 10, 10, 10, 10,
+                # 69, 69, 69, 69, 69, 69, 69, 69, 
+            ),
+            'N' : (
+                 1,	1,	1,	1,	1,	1,	1,	1,
+                2,	2,	2,	3,	3,	2,	2,	2,
+                2,	2,	3,	4,	4,	3,	2,	2,
+                3,	3,	4,	5,	5,	4,	3,	3,
+                3,	3,	4,	5,	5,	4,	3,	3,
+                2,	2,	3,	4,	4,	3,	2,	2,
+                2,	2,	2,	3,	3,	2,	2,	2,
+                1,	1,	1,	1,	1,	1,	1,	1, 
+            ), 
+           'B' : (
+                1,	1,	1,	1,	1,	1,	1,	1,
+                2,	2,	2,	3,	3,	2,	2,	2,
+                2,	2,	3,	4,	4,	3,	2,	2,
+                3,	3,	4,	5,	5,	4,	3,	3,
+                3,	3,	4,	5,	5,	4,	3,	3,
+                2,	2,	3,	4,	4,	3,	2,	2,
+                2,	2,	2,	3,	3,	2,	2,	2,
+                1,	1,	1,	1,	1,	1,	1,	1, 
+            ),
+            'R' : (
+                1,	1,	1,	1,	1,	1,	1,	1,
+                2,	2,	2,	3,	3,	2,	2,	2,
+                2,	2,	3,	4,	4,	3,	2,	2,
+                3,	3,	4,	5,	5,	4,	3,	3,
+                3,	3,	4,	5,	5,	4,	3,	3,
+                2,	2,	3,	4,	4,	3,	2,	2,
+                2,	2,	2,	3,	3,	2,	2,	2,
+                1,	1,	1,	1,	1,	1,	1,	1, 
+            ),
+            'Q' : (
+                1,	1,	1,	1,	1,	1,	1,	1,
+                2,	2,	2,	3,	3,	2,	2,	2,
+                2,	2,	3,	4,	4,	3,	2,	2,
+                3,	3,	4,	5,	5,	4,	3,	3,
+                3,	3,	4,	5,	5,	4,	3,	3,
+                2,	2,	3,	4,	4,	3,	2,	2,
+                2,	2,	2,	3,	3,	2,	2,	2,
+                1,	1,	1,	1,	1,	1,	1,	1, 
+            ),
+            'K' : (
+                0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0,
+            ),
+        }
+        self.black.piece_val = { 'P': -10, 'N': -25, 'B': -30, 'R': -50, 'Q': -100, 'K': -1000, 'p': 10, 'n': 25, 'b': 30, 'r': 50, 'q': 100, 'k': 1000}
+        self.black.loc_val = {
+            'P' : (
+                10, 10, 10, 10, 10, 10, 10, 10,
+                2,  2,  3,  4,  4,  3,  2,  2,
+                2,  2,  3,  4,  4,  3,  2,  2,
+                3,  3,  4,  5,  5,  4,  3,  3,
+                3,  3,  4,  5,  5,  4,  3,  3,
+                2,  2,  2,  3,  3,  2,  2,  2,
+                1,  1,  1,  1,  1,  1,  1,  1,
                 # 69, 69, 69, 69, 69, 69, 69, 69, 
             ),
             'N' : (
@@ -94,22 +157,21 @@ class engine:
             WHITE = 1
             BLACK = -1
         """
-        try:
-            value = 0
-            pmap = board.piece_map()
-            for key in pmap:
-                peice = pmap[key]
-                value += self.piece_val[peice.symbol()]*player_col
 
-                if peice.color and player_col == 1:
-                    value += self.loc_val[peice.symbol()][key]
-                elif not(peice.color) and player_col == -1:
-                    value += self.loc_val[peice.symbol().capitalize()][63 - key]
-        except:
-            print("it should be in this section")
+        value = 0
+        pmap = board.piece_map()
+        for key in pmap:
+            peice = pmap[key]
+            value += self.piece_val[peice.symbol()]*player_col
 
-        # return value
-        return 2
+            if peice.color and player_col == 1:
+                value += self.loc_val[peice.symbol()][key]
+            elif not(peice.color) and player_col == -1:
+                value += self.loc_val[peice.symbol().capitalize()][63 - key]
+        
+
+        return value
+        # return 2
 
     def play(self,board,tlim):
         """
