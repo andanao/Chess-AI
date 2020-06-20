@@ -2,6 +2,7 @@ import random
 import chess
 import re
 import helper
+import chess.pgn
 
 class engine:
     """
@@ -106,7 +107,8 @@ class engine:
             if peice.color and player_col == 1:
                 value += self.loc_val[peice.symbol()][key]
             elif not(peice.color) and player_col == -1:
-                value += self.loc_val[peice.symbol().capitalize()][63-key]
+                # value += self.loc_val[peice.symbol().capitalize()][63-key]
+                value += self.loc_val[peice.symbol().capitalize()][63 - key]
 
         return value
 
@@ -123,31 +125,14 @@ class engine:
             root = chess.pgn.Game.from_board(board)
             moves = board.generate_legal_moves()
             for item in moves:
-                print(item)
                 root.add_variation(item)
             for var in root.variations:
-                #calculate board position and pick best
-                print(self.board_value(root.variation(var)))
-                # print(str(root.variation(var).board()))
-            # print(root.variations)
+
             return chess.Move.null()
         else:
             return chess.Move.null()
     
 
-    def grow_twigs(self,board,player_col,game):
-        root = chess.pgn.Game()
-        root.setup(board.fen())
-        movelist = self.legal_move_list(board)
-        # movespace = []
-        for item in movelist:
-            child = chess.pgn.GameNode()
-            child.parent = root
-            child.move = board.parse_san(item)
-            score = self.board_value(child.board(),player_col)
-            child.comment = [child.move, score]
-            root.variations.append(child)
-        return root
 
 
     def close(self):
