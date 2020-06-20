@@ -141,15 +141,18 @@ class engine:
                     possible_moves.append(var.uci())
          
             
-            # print(possible_moves)
             final_move = possible_moves[random.randint(0,len(possible_moves)-1)]
-            # print("\t\t!!! \t "+ str(final_move))
             return chess.Move.from_uci(str(final_move))
-            # return chess.Move.null()
         else:
             return chess.Move.null()
     
-    def get_best_variation(self,root):
+    def recursive_tree(self,depth,depth_lim):
+        if(depth < depth_lim):
+            recursive_tree(depth+1,depth_lim)
+        else:
+            pass
+
+    def min_max(self,root):
         pass
 
 
