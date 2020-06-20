@@ -147,17 +147,6 @@ class engine:
                 self.recursive_tree(var,depth+1,depth_lim)
                 # print(depth)
                 
-    def favorite_child(self,node,depth):
-        if depth%2:
-            print("min")
-            score = 1000000
-            for var in node.variations:
-                score = self.board_value(var.board,self.color*-1)
-
-        else:
-            print('max')
-        pass
-
     def alphabeta(self,node,depth,alpha,beta,max_player):
         if depth == 0 or node.is_end():
             return self.eval_board(node)
@@ -178,7 +167,7 @@ class engine:
                     break #alpha cutoff
 
     def eval_board(self,board):
-        pass
+        return random.randint(-1000,1000)
 
     def close(self):
         pass
