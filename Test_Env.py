@@ -3,7 +3,7 @@ import chess.engine
 import math
 import time
 
-import twiggy as eng1
+import loopy as eng1
 import RandomTake as eng2
 
 # import twiggy as eng2

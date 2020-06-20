@@ -6,7 +6,7 @@ import chess.pgn
 
 class engine:
     """
-    Make a random move, just testing
+    Using recursion
     """
 
     def __init__(self,tlim):
@@ -104,7 +104,6 @@ class engine:
                 if peice.color and player_col == 1:
                     value += self.loc_val[peice.symbol()][key]
                 elif not(peice.color) and player_col == -1:
-                    # value += self.loc_val[peice.symbol().capitalize()][63-key]
                     value += self.loc_val[peice.symbol().capitalize()][63 - key]
         except:
             print("it should be in this section")
@@ -113,6 +112,9 @@ class engine:
         return 2
 
     def play(self,board,tlim):
+        """
+        Play a turn witht the chess engine
+        """
         if not hasattr(self,'color'):
             if board.turn == chess.WHITE:
                 # print('WHITE\n\n')
@@ -124,35 +126,35 @@ class engine:
         if board.fullmove_number < self.max_turns:
             root = chess.pgn.Game()
             root.setup(board.fen())
-            moves = root.board().legal_moves
-            for item in moves:
-                root.add_variation(item)
-            best_score = -100000
-            possible_moves = []
-
-            for var in root.variations:
-  
+            self.recursive_tree(root,0,3)
             
-                temp_score = self.board_value(var.board(),self.color)
-                 
-                if(temp_score >= best_score):
-                    if(temp_score > best_score):
-                        best_score = temp_score
-                    possible_moves.append(var.uci())
-         
-            
-            final_move = possible_moves[random.randint(0,len(possible_moves)-1)]
-            return chess.Move.from_uci(str(final_move))
+            return chess.Move.null()
         else:
             return chess.Move.null()
     
-    def recursive_tree(self,depth,depth_lim):
-        if(depth < depth_lim):
-            recursive_tree(depth+1,depth_lim)
-        else:
-            pass
+    def recursive_tree(self,node,depth,depth_lim):
+        """
+        you spin my head right round right round now
+        """
+        if (depth<depth_lim):
+            for item in node.legal_moves:
+                node.add_variation(item)
+            self.recursive_tree(node,depth+1,depth_lim)
+                
 
     def min_max(self,root):
+        """
+        Does what it says on the box
+        """
+        print('TODO')
+        pass
+
+    def min_chess(self):
+        print('TODO')
+        pass
+
+    def max_chess(self):
+        print('TODO')
         pass
 
 

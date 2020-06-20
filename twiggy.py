@@ -6,7 +6,7 @@ import chess.pgn
 
 class engine:
     """
-    Make a random move, just testing
+    Make a move based off of 1 layer deep search, just testing
     """
 
     def __init__(self,tlim):
