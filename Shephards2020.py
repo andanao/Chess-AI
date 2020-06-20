@@ -9,6 +9,7 @@ class engine:
     """
 
     def __init__(self,tlim):
+        self.max_turns = 2
         self.turn = 0       
         self.tlim = tlim 
         self.reg_parse = re.compile(r"(?:\w|\+|\#|\=|\-){2,6}(?=,|\))")
@@ -81,7 +82,12 @@ class engine:
         Get a list of legal moves in san notation
         """
         leg_move = board.legal_moves
+        test = board.generate_legal_moves()
+        print('testing legal move gen')
+        for item in test:
+            print("\t"+str(item))
         leg_move_list = re.findall(self.reg_parse,str(leg_move))
+        # print(board.legal_moves)
         return leg_move_list
 
     def board_value(self,board):
@@ -107,14 +113,19 @@ class engine:
     def play(self,board,tlim):
         if not hasattr(self,'color'):
             if board.turn == chess.WHITE:
-                print('WHITE')
+                # print('WHITE\n\n')
                 self.color = 1 #
             else:
-                print("BLACK")
+                # print("BLACK\n\n")
                 self.color = -1
-                self.piece_val = self.color*self.piece_val #flip the points values for peices if black
-        self.turn += 1
-        if self.turn <2:
+                # for item in self.piece_val:
+                #     #flip the points values for peices if black
+                #     self.piece_val[item] = self.color*self.piece_val[item] 
+                # self.piece_val = self.color*self.piece_val 
+
+
+        # self.turn += 1
+        if board.fullmove_number < self.max_turns:
             mov_list = self.legal_move_list(board)
             random_num = random.randint(0,len(mov_list)-1)
             try:
@@ -128,5 +139,8 @@ class engine:
         else:
             return chess.Move.null()
     
+    def make_tree(self,board,depth):
+        pass
+
     def close(self):
         pass
