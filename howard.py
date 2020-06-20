@@ -241,6 +241,7 @@ class engine:
 
             ret = piece_v*1000 + square_v
         # node.comment = str(ret)
+        ret = ret*random.uniform(.95,1.05)
         return ret
 
 
