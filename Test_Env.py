@@ -4,9 +4,9 @@ import math
 import time
 
 import howard as eng1
-# import loopy as eng2
-import RandomTake as eng2
-# import rematch2 as eng1
+# import loopy as eng1
+# import RandomTake as eng2
+import rematch2 as eng2
 
 debug = open("game_debug.txt", "w")
 stack = open("game_stack.pgn", "w")
