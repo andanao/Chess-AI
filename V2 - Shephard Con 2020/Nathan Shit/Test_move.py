@@ -2,42 +2,39 @@ import chess
 import chess.engine
 import math
 import RandomAllpurposeNonDeterministicOutcomeManipulation as eng1
-import RandomAllpurposeNonDeterministicOutcomeManipulation as eng2
 # import rematch as eng1
-# import rematch as eng2
 
 debug = open("game_debug.txt", "w")
 stack = open("game_stack.pgn", "w")
 
 print("\n\n\n\n\n\n\n")
 White = eng1.engine()
-Black = eng2.engine()
+Black = eng1.engine()
 
 tlim = 1
 board = chess.Board()
+board.set_fen("r1bqkbnr/ppp1pppp/2np4/8/4P3/5Q2/PPPP1PPP/RNB1KBNR w KQkq -")
 
 while not board.is_game_over():
     result = White.play(board, chess.engine.Limit(time=tlim))
     if board.uci(result) == "0000":
         print("white null")
         break
+    print("Whites move = " + str(result))
     board.push(result)
     debug.write("\n\nWhite\n" + board.uci(result) + "\n" + str(board))
     stack.write(board.uci(result)+"\n")
-    print(result)
 
     if board.is_game_over():
         break
-    if board.turn > 50:
-        break
 
-    result = Black.play(board, chess.engine.Limit(time=tlim))
-    if board.uci(result) == "0000":
+    result = input('your move negro\n')
+    if result == "0000":
         print("black null")
         break
-    board.push(result)
-    debug.write("\n\nBlack\n" + board.uci(result) + "\n" + str(board))
-    stack.write(board.uci(result) + "\n")
+    board.push(chess.Move.from_uci(result))
+    debug.write("\n\nBlack\n" + result + "\n" + str(board))
+    stack.write(result + "\n")
 
 
 debug.close()

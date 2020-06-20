@@ -1,9 +1,9 @@
 # import chess
-import re
-import random
-import helper
-from chess_debug import print_to_debug
-
+# import re
+# import random
+# import helper
+# from chess_debug import print_to_debug
+print('test')
 # go away old shit
      # print('\n\n\n\n\n')
 

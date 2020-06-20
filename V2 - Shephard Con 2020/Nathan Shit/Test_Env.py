@@ -1,9 +1,9 @@
 import chess
 import chess.engine
 import math
-import RandomAllpurposeNonDeterministicOutcomeManipulation as eng1
+# import RandomAllpurposeNonDeterministicOutcomeManipulation as eng1
 import RandomAllpurposeNonDeterministicOutcomeManipulation as eng2
-# import rematch as eng1
+import rematch as eng1
 # import rematch as eng2
 
 debug = open("game_debug.txt", "w")
