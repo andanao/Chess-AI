@@ -1,32 +1,10 @@
-def minmax(self, node, alpha, beta, im_max, depth):
-        if node.is_end():
-            return int(node.comment)
-        pointer = None
-        if im_max:
-            value = GLOBAL_MIN
-            for child in node.variations:
-                res = self.minmax(child, alpha, beta, False, depth + 1)
-                if res > value:
-                    value = res
-                    pointer = child
-                alpha = max(alpha, value)
-                if alpha >= beta:
-                    break
-            if depth == 0:
-                return pointer
-            else:
-                return value
-        else:
-            value = GLOBAL_MAX
-            for child in node.variations:
-                res  = self.minmax(child, alpha, beta, True, depth + 1)
-                if res < value:
-                    value = res
-                    pointer = child
-                beta = min(beta, value)
-                if beta <= alpha:
-                    break
-            if depth == 0:
-                return pointer
-            else:
-                return value
+fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR'
+
+piece_val = { 'P': 10, 'N': 25, 'B': 30, 'R': 50, 'Q': 100, 'K': 1000, 'p': -10, 'n': -25, 'b': -30, 'r': -50, 'q': -100, 'k': -1000}
+
+val = 0
+for peice in piece_val:
+    val += fen.count(peice)*piece_val[peice]
+
+
+print

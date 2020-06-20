@@ -7,17 +7,20 @@ import time
 
 
 
+
+
 class engine:
     """
     Using recursion
     """
-
+    GLOBAL_HIGH = 1000000
+    GLOBAL_LOW = -GLOBAL_HIGH
     def __init__(self,tlim):
         self.max_turns = 75
         self.turn = 0       
         self.tlim = tlim 
         self.reg_parse = re.compile(r"(?:\w|\+|\#|\=|\-){2,6}(?=,|\))")
-        self.piece_val = { 'P': 10, 'N': 25, 'B': 30, 'R': 50, 'Q': 100, 'K': 1000, 'p': -10, 'n': -25, 'b': -30, 'r': -50, 'q': -100, 'k': -1000}
+        self.piece_val = { 'P': 1, 'N': 3, 'B': 3, 'R': 5, 'Q': 9, 'K': 1000, 'p': -1, 'n': -3, 'b': -3, 'r': -5, 'q': -9, 'k': -1000}
         self.loc_val = {
             'P' : (
                 1,  1,  1,  1,  1,  1,  1,  1,
@@ -138,6 +141,7 @@ class engine:
             alpha = 1000
             beta = -alpha
             val, play = self.alphabeta(root,0,alpha,beta,self.agent) #fix this true
+            print('Move Val:\t'+str(val))
             return play.move
         else:
             return chess.Move.null()
@@ -158,7 +162,7 @@ class engine:
         if node.is_end():
             return (self.eval_board(node), pointer)
         if max_player:
-            value = -10000000
+            value = self.GLOBAL_LOW
             for child in node.variations:
                 result, _ = self.alphabeta(child, depth + 1, alpha, beta, False)
 
@@ -171,7 +175,7 @@ class engine:
                     break #beta cutoff
             return value, pointer
         else:
-            value = 10000000
+            value = self.GLOBAL_HIGH
             for child in node.variations:
                 result, _ = self.alphabeta(child, depth + 1, alpha, beta, True)
 
@@ -184,8 +188,19 @@ class engine:
                     break #beta cutoff
             return value, pointer
 
-    def eval_board(self,board):
-        return random.randint(-1000,1000)
+    def eval_board(self,node):
+        # return random.randint(-1000,1000)
+        """
+        Evaluate the board position 
+            WHITE = MAXIMIZER
+            BLACK = minimizer
+        """
+        fen = node.board().fen()
+        value = 0
+        for peice in self.piece_val:
+            value += fen.count(peice)*self.piece_val[peice]
+        return value
+
 
     def close(self):
         pass
