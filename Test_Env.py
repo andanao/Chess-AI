@@ -33,7 +33,7 @@ def take_turn(board, engine):
 if __name__ == '__main__':
     tlim = 1
 
-    print("\n\n\n\n\n\n\n")
+    print("\n\n\n\n\n\n\n\t----Starting\t----")
     white_engine = eng1.engine(tlim)
     black_engine = eng2.engine(tlim)
     engines = {True : white_engine, False: black_engine}

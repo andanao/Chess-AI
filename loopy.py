@@ -3,6 +3,7 @@ import chess
 import re
 import helper
 import chess.pgn
+import time
 
 class engine:
     """
@@ -188,8 +189,12 @@ class engine:
         if board.fullmove_number < self.max_turns:
             root = chess.pgn.Game()
             root.setup(board.fen())
-            self.recursive_tree(root,0,3)
-            
+            start_time = time.time()
+            depth = 3
+            self.recursive_tree(root,0,depth)
+            end_time = time.time()
+            print("Time for Depth "+str(depth)+"\n\t"+str(end_time-start_time))
+
             return chess.Move.null()
         else:
             return chess.Move.null()
@@ -216,8 +221,24 @@ class engine:
             print('max')
         pass
 
-    def alphabeta(self,node):
-        pass
+    def alphabeta(self,node,depth,alpha,beta,max_player):
+        if depth == 0 or node.is_end():
+            return self.eval_board(node)
+        if max_player:
+            value = -10000000
+            for child in node.variations:
+                value = self.alphabeta(child, depth - 1, alpha, beta, False)
+                alpha = max(alpha, value)
+                if alpha >= beta:
+                    break #beta cutoff
+            return value
+        else:
+            value =  10000000
+            for child in node.variations:
+                value = self.alphabeta(child,depth - 1, alpha, beta, True)
+                beta = min (beta, value)
+                if beta <= alpha:
+                    break #alpha cutoff
 
     def eval_board(self,board):
         pass

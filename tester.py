@@ -1,6 +1,3 @@
-depth = 2
-
-if depth%2:
-    print("min")
-else:
-    print('max')
+b = 10
+a = max(100,b)
+print(a)
