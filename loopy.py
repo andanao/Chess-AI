@@ -137,10 +137,13 @@ class engine:
         you spin my head right round right round now
         """
         if (depth<depth_lim):
-            for item in node.legal_moves:
+            for item in node.board().legal_moves:
                 node.add_variation(item)
-            self.recursive_tree(node,depth+1,depth_lim)
+            for var in node.variations:
+                self.recursive_tree(var,depth+1,depth_lim)
+                # print(depth)
                 
+
 
     def min_max(self,root):
         """
