@@ -82,11 +82,11 @@ class engine:
         """
         leg_move = board.legal_moves
         leg_move_list = re.findall(self.reg_parse,str(leg_move))
-        print()
+        print(board.generate_legal_moves)
         return leg_move_list
 
     def play(self,board,tlim):
-        if self.turn <75:
+        if board.fullmove_number < 2:
             mov_list = self.legal_move_list(board)
             random_num = random.randint(0,len(mov_list)-1)
             try:
