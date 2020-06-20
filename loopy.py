@@ -12,7 +12,7 @@ class engine:
     def __init__(self,tlim):
         self.GLOBAL_HIGH = 100000
         self.GLOBAL_LOW = -self.GLOBAL_HIGH
-        self.max_turns = 75
+        self.max_turns = 200
         self.counter = 0       
         self.tlim = tlim 
         self.reg_parse = re.compile(r"(?:\w|\+|\#|\=|\-){2,6}(?=,|\))")
