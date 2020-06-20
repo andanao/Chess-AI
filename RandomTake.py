@@ -9,6 +9,7 @@ class engine:
     """
 
     def __init__(self,tlim):
+        self.max_turns = 200
         self.turn = 0       
         self.tlim = tlim 
         self.reg_parse = re.compile(r"(?:\w|\+|\#|\=|\-){2,6}(?=,|\))")
@@ -82,19 +83,29 @@ class engine:
         """
         leg_move = board.legal_moves
         leg_move_list = re.findall(self.reg_parse,str(leg_move))
-        print(board.generate_legal_moves)
         return leg_move_list
 
     def play(self,board,tlim):
-        if board.fullmove_number < 2:
+        if board.fullmove_number < self.max_turns:
             mov_list = self.legal_move_list(board)
             random_num = random.randint(0,len(mov_list)-1)
+
+            capture_list = []
+            for item in mov_list:
+                if 'x' in item:
+                    capture_list.append(item)
+            
+            if len(capture_list) == 0:
+                final_move = mov_list[random_num]
+            else:
+                final_move = capture_list[random.randint(0,len(capture_list)-1)]
+            
             try:
-                optimal_play = board.parse_san(mov_list[random_num])
+                optimal_play = board.parse_san(final_move)
             except:
-                print("something broke in the randomizer")
+                print("something broke in move parser")
                 print(board)
-                print("tried: "+mov_list[random_num])
+                print("tried: "+final_move)
                 pass
             return optimal_play
         else:
