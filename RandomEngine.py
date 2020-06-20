@@ -85,9 +85,11 @@ class engine:
         return leg_move_list
 
     def play(self,board,tlim):
-        if self.turn <75:
-            mov_list = self.legal_move_list(board)
+        if board.fullmove_number <75:
+            mov_list = board.generate_legal_moves()
             random_num = random.randint(0,len(mov_list)-1)
+
+            # mov_list = self.legal_move_list(board)
             try:
                 optimal_play = board.parse_san(mov_list[random_num])
             except:
@@ -96,6 +98,8 @@ class engine:
                 print("tried: "+mov_list[random_num])
                 pass
             return optimal_play
+        else:
+            return chess.Move.null()
     
     def close(self):
         pass
