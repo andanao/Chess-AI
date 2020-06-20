@@ -118,13 +118,9 @@ class engine:
             else:
                 # print("BLACK\n\n")
                 self.color = -1
-                # for item in self.piece_val:
-                #     #flip the points values for peices if black
-                #     self.piece_val[item] = self.color*self.piece_val[item] 
-                # self.piece_val = self.color*self.piece_val 
 
 
-        # self.turn += 1
+
         if board.fullmove_number < self.max_turns:
             mov_list = self.legal_move_list(board)
             random_num = random.randint(0,len(mov_list)-1)
