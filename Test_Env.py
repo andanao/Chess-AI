@@ -48,10 +48,6 @@ if __name__ == '__main__':
         if board.is_game_over():
             break 
 
-    white_engine.close()
-    black_engine.close()
 
-    debug.close()
-    stack.close()
     print('\n\nGG!')
     print(str(board.result())+' in '+str(math.ceil(len(board.move_stack)/2))+'\n\n')

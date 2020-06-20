@@ -5,19 +5,15 @@ import helper
 import chess.pgn
 import time
 
-
-
-
-
 class engine:
     """
     Using recursion
     """
-    GLOBAL_HIGH = 1000000
+    GLOBAL_HIGH = 100000
     GLOBAL_LOW = -GLOBAL_HIGH
     def __init__(self,tlim):
         self.max_turns = 75
-        self.turn = 0       
+        self.counter = 0       
         self.tlim = tlim 
         self.reg_parse = re.compile(r"(?:\w|\+|\#|\=|\-){2,6}(?=,|\))")
         self.piece_val = { 'P': 1, 'N': 3, 'B': 3, 'R': 5, 'Q': 9, 'K': 1000, 'p': -1, 'n': -3, 'b': -3, 'r': -5, 'q': -9, 'k': -1000}
@@ -82,6 +78,25 @@ class engine:
                 0, 0, 0, 0, 0, 0, 0, 0,
             ),
         }
+        self.piece_values = {
+            chess.PAWN : 1,
+            chess.KNIGHT : 3,
+            chess.BISHOP : 3,
+            chess.ROOK : 5,
+            chess.QUEEN : 9,
+            chess.KING : 1
+        }
+        self.square_values = (
+            1, 2, 2, 2, 2, 2, 2, 1,
+             1, 1, 1, 1, 1, 1, 1, 1, 
+             1, 5, 8, 6, 6, 8, 5, 1, 
+             1, 1, 6, 9, 9, 6, 1, 1, 
+             1, 1, 6, 9, 9, 6, 1, 1, 
+             1, 5, 8, 6, 6, 8, 5, 1,
+             1, 1, 1, 1, 1, 1, 1, 1,
+             1, 2, 2, 2, 2, 2, 2, 1
+            )
+
 
 
     def legal_move_list(self,board):
@@ -140,8 +155,9 @@ class engine:
             # print("Time for Depth "+str(depth)+"\n\t"+str(end_time-start_time))
             alpha = 1000
             beta = -alpha
-            val, play = self.alphabeta(root,0,alpha,beta,self.agent) #fix this true
-            print('Move Val:\t'+str(val))
+            play = self.alphabeta(root,0,alpha,beta,root.board().turn) #fix this true
+            # print('Move Val:\t'+str(val))
+            self.counter = 0
             return play.move
         else:
             return chess.Move.null()
@@ -159,12 +175,15 @@ class engine:
                 
     def alphabeta(self, node, depth, alpha, beta, max_player):
         pointer = None
+        self.counter+=1
+        print('Count \t'+str(self.counter)+"\t Depth:\t"+str(depth))
         if node.is_end():
-            return (self.eval_board(node), pointer)
+            return (self.eval_board(node))
+            # print('node end')
         if max_player:
             value = self.GLOBAL_LOW
             for child in node.variations:
-                result, _ = self.alphabeta(child, depth + 1, alpha, beta, False)
+                result = self.alphabeta(child, depth + 1, alpha, beta, False)
 
                 if result > value:
                     value = result
@@ -172,12 +191,17 @@ class engine:
 
                 alpha = max(alpha, value)
                 if alpha >= beta:
+                    # print('beta cutoff')
                     break #beta cutoff
-            return value, pointer
+            if depth == 0:
+                return pointer
+            else:
+                return value
+            # return value, pointer
         else:
             value = self.GLOBAL_HIGH
             for child in node.variations:
-                result, _ = self.alphabeta(child, depth + 1, alpha, beta, True)
+                result = self.alphabeta(child, depth + 1, alpha, beta, True)
 
                 if result < value:
                     value = result
@@ -185,8 +209,12 @@ class engine:
 
                 beta = min(alpha, value)
                 if alpha <= beta:
+                    # print('alpha cutoff')
                     break #beta cutoff
-            return value, pointer
+            if depth == 0:
+                return pointer
+            else:
+                return value
 
     def eval_board(self,node):
         # return random.randint(-1000,1000)
@@ -195,9 +223,36 @@ class engine:
             WHITE = MAXIMIZER
             BLACK = minimizer
         """
-        fen = node.board().fen()
-        value = 0
-        for peice in self.piece_val:
-            value += fen.count(peice)*self.piece_val[peice]
+        board = node.board()
+        if(board.is_game_over()):
+            res = board.result()
+            if res == '1-0':
+                ret = self.GLOBAL_HIGH - 1
+            elif res == '0-1':
+                ret = self.GLOBAL_LOW + 1
+            else:
+                pass
+        else:
+            piece_v = 0
+            square_v = 0
+            map = board.piece_map()
+            for square in map:
+                piece_v += self.evaluate_piece(map[square])
+                square_v += self.evaluate_square(square, map[square])
+
+            ret = piece_v*1000 + square_v
+        # node.comment = str(ret)
+        return ret
+
+
+    def evaluate_square(self, square, piece):
+        value = self.square_values[square]
+        if not piece.color:
+            value *= -1
         return value
 
+    def evaluate_piece(self, piece):
+        value = self.piece_values[piece.piece_type]
+        if not piece.color:
+            value *= -1
+        return value
