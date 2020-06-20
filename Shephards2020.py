@@ -90,7 +90,7 @@ class engine:
         # print(board.legal_moves)
         return leg_move_list
 
-    def board_value(self,board):
+    def board_value(self,board,player_col):
         """
         Evaluate the board position to good bad number
 
@@ -102,10 +102,10 @@ class engine:
         pmap = board.piece_map()
         for key in pmap:
             peice = pmap[key]
-            value += self.piece_val[peice.symbol()]
-            if peice.color and self.color == 1:
+            value += self.piece_val[peice.symbol()]*player_col
+            if peice.color and player_col == 1:
                 value += self.loc_val[peice.symbol()][key]
-            elif not(peice.color) and self.color == -1:
+            elif not(peice.color) and player_col == -1:
                 value += self.loc_val[peice.symbol().capitalize()][63-key]
 
         return value
