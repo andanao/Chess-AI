@@ -3,10 +3,11 @@ import chess.engine
 import math
 import time
 
-import twiggy as eng2
-import RandomTake as eng1
-#import rematch as eng1
-# import rematch as eng2
+import twiggy as eng1
+import RandomTake as eng2
+
+# import twiggy as eng2
+# import RandomTake as eng1
 
 debug = open("game_debug.txt", "w")
 stack = open("game_stack.pgn", "w")

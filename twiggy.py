@@ -10,7 +10,7 @@ class engine:
     """
 
     def __init__(self,tlim):
-        self.max_turns = 2
+        self.max_turns = 75
         self.turn = 0       
         self.tlim = tlim 
         self.reg_parse = re.compile(r"(?:\w|\+|\#|\=|\-){2,6}(?=,|\))")
@@ -84,9 +84,9 @@ class engine:
         """
         leg_move = board.legal_moves
         test = board.generate_legal_moves()
-        print('testing legal move gen')
-        for item in test:
-            print("\t"+str(item))
+        # print('testing legal move gen')
+        # for item in test:
+        #     print("\t"+str(item))
         leg_move_list = re.findall(self.reg_parse,str(leg_move))
         # print(board.legal_moves)
         return leg_move_list
@@ -126,13 +126,29 @@ class engine:
             moves = board.generate_legal_moves()
             for item in moves:
                 root.add_variation(item)
-            for var in root.variations:
+            best_score = -100000
+            possible_moves = []
 
-            return chess.Move.null()
+            for var in root.variations:
+                temp_score = self.board_value(root.variation(var).board(),self.color)
+
+                if temp_score > best_score:
+                    possible_moves.clear()
+                    possible_moves.append(root.variation(var).uci())
+                    best_score = temp_score
+                elif temp_score == best_score:
+                    possible_moves.append(root.variation(var).uci())
+
+            print(possible_moves)
+            final_move = possible_moves[random.randint(0,len(possible_moves)-1)]
+            print("\t\t!!! \t "+ str(final_move))
+            return chess.Move.from_uci(str(final_move))
+            # return chess.Move.null()
         else:
             return chess.Move.null()
     
-
+    def get_best_variation(self,root):
+        pass
 
 
     def close(self):
